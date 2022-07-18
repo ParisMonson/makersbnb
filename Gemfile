@@ -13,3 +13,5 @@ gem "webrick", "~> 1.7"
 gem "rack-test", "~> 2.0"
 
 gem "sinatra-contrib", "~> 2.2"
+
+gem "rspec", "~> 3.11"
