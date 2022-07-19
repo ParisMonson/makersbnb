@@ -7,13 +7,13 @@ class ReservationRepository
     convert(result_set)
   end
 
-  def find_by_guest_id(guest_id)
+  # def find_by_guest_id(guest_id)
 
-  end
+  # end
 
-  def find_by_host_id(host_id)
+  # def find_by_host_id(host_id)
 
-  end
+  # end
 
   def create(reservation)
     sql = "INSERT INTO reservations(host_id, guest_id, space_id, start_date, end_date, number_nights, confirmed)
@@ -30,7 +30,9 @@ class ReservationRepository
     DatabaseConnection.exec_params(sql, params)
   end
 
-  def delete(reservation)
+  def delete(id)
+    sql = "DELETE FROM reservations WHERE id=$1;"
+    DatabaseConnection.exec_params(sql, [id])
   end
 
   private
