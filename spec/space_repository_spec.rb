@@ -36,39 +36,42 @@ describe SpaceRepository do
 
     expect(space.address).to eq "Camber S1 00J"
     expect(space.title).to eq "beach view"
+    expect(space.price_per_night).to eq "$100.00"
     expect(space.description).to eq "a modern house on the beach"
     expect(space.available_from).to eq "2022-07-19"
     expect(space.available_to).to eq "2022-11-19"
   end
 
-  xit "adds a new space to the repo" do
+  it "adds a new space to the repo" do
     repo = SpaceRepository.new
+    repo.create(double(:space, address: "address", title: "title", description: "description", price_per_night: "$100.00", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id))
     spaces = repo.all
-    repo.create(double(:space, address: "address", title: "title", description: "description", available_from: "2022/07/19", available_to: "2022/08/01"))
 
-    expect(spaces.length).to eq
-    expect(spaces.last.address).to eq
-    expect(spaces.last.title).to eq
-    expect(spaces.last.description).to eq
-    expect(spaces.last.available_from)
-    expect(spaces.last.available_to).to eq
+    expect(spaces.length).to eq 5
+    expect(spaces.last.address).to eq "address"
+    expect(spaces.last.title).to eq "title"
+    expect(spaces.last.price_per_night).to eq "$100.00"
+    expect(spaces.last.description).to eq "description"
+    expect(spaces.last.available_from).to eq "2022-07-19"
+    expect(spaces.last.available_to).to eq "2022-08-01"
   end
 
   xit "deletes a space from the repo" do
     repo = SpaceRepository.new
-    spaces = repo.all
-    space = spaces.last
-
+    space = repo.all.last
     repo.delete(space)
-    expect(spaces.length).to eq
-    expect(spaces.last.address).to eq
-    expect(spaces.last.title).to eq
-    expect(spaces.last.description).to eq
-    expect(spaces.last.available_from)
-    expect(spaces.last.available_to).to eq
+    spaces = repo.all
+
+    expect(spaces.length).to eq 3
+    expect(spaces.last.address).to eq "Crillon 12345 "
+    expect(spaces.last.title).to eq "review view"
+    expect(spaces.last.description).to eq "a house in the banks of the Rhodes"
+    expect(spaces.last.price_per_night).to eq "$80.00"
+    expect(spaces.last.available_from).to eq "2022-03-19"
+    expect(spaces.last.available_to).to eq "2022-07-17"
   end
 
-  xit "updates the description of a space" do
+  it "updates the description of a space" do
     repo = SpaceRepository.new
     spaces = repo.all
     space = spaces.first
@@ -79,7 +82,7 @@ describe SpaceRepository do
     expect(spaces.first.description).to eq "new description"
   end
 
-  xit "updates the title of a space" do
+  it "updates the title of a space" do
     repo = SpaceRepository.new
     spaces = repo.all
     space = spaces.first
@@ -90,6 +93,15 @@ describe SpaceRepository do
     expect(spaces.first.title).to eq "new title"
   end
 
-  xit "updates the availability of a space" do
+  it "updates the availability of a space" do
+    repo = SpaceRepository.new
+    spaces = repo.all
+    space = spaces.last
+    space.available_from = "2022-08-01"
+    space.available_to = "2022-08-02"
+    repo.update_availability(space)
+
+    expect(spaces.last.available_from).to eq "2022-08-01"
+    expect(spaces.last.available_to).to eq "2022-08-02"
   end
 end
