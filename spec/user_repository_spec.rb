@@ -103,5 +103,62 @@ describe UserRepository do
       expect(found_user).to eq(nil)
     end
   end
+  
+  context "valid_login?#" do
+    it "returns true if entered username and password match those in the system" do
+      repo = UserRepository.new
+      new_user = User.new
+      new_user.first_name = 'Paris'
+      new_user.last_name = 'Monson'
+      new_user.email = 'paris@mail.com'
+      new_user.password = '123'
+      repo.create_user(new_user)
+      expect(repo.all.length).to eq(1)
+      expect(repo.valid_login?("paris@mail.com", "123")).to eq(true)
+    end
+
+    it "returns false if entered username and password do not match those in the system" do
+      repo = UserRepository.new
+      new_user = User.new
+      new_user.first_name = 'Paris'
+      new_user.last_name = 'Monson'
+      new_user.email = 'paris@mail.com'
+      new_user.password = '123'
+      repo.create_user(new_user)
+      expect(repo.all.length).to eq(1)
+      expect(repo.valid_login?("joe@mail.com", "123")).to eq(false)
+    end
+
+    it "returns false if neither username of password match those in the system" do
+      repo = UserRepository.new
+      new_user = User.new
+      new_user.first_name = 'Paris'
+      new_user.last_name = 'Monson'
+      new_user.email = 'paris@mail.com'
+      new_user.password = '123'
+      repo.create_user(new_user)
+      expect(repo.all.length).to eq(1)
+      expect(repo.valid_login?("joe@mail.com", "12345")).to eq(false)
+    end
+
+    it "returns true for 2 succesful logins" do
+      repo = UserRepository.new
+      new_user = User.new
+      new_user.first_name = 'Paris'
+      new_user.last_name = 'Monson'
+      new_user.email = 'paris@mail.com'
+      new_user.password = '123'
+      repo.create_user(new_user)
+      new_user2 = User.new
+      new_user2.first_name = 'Ev'
+      new_user2.last_name = 'Sivtsova'
+      new_user2.email = 'ev@mail.com'
+      new_user2.password = 'hi'
+      repo.create_user(new_user2)
+      expect(repo.all.length).to eq(2)
+      expect(repo.valid_login?("paris@mail.com", "123")).to eq(true)
+      expect(repo.valid_login?("ev@mail.com", "hi")).to eq(true)
+    end
+  end
 
 end

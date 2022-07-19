@@ -24,7 +24,7 @@ class UserRepository
 
   def create_user(new_user)
     sql = "INSERT INTO users (first_name, last_name, email, password) VALUES
-    ($1, $2, $3, $4);"
+    ($1, $2, $3, crypt($4, gen_salt('bf',4)));"
     params = [new_user.first_name, new_user.last_name, new_user.email, new_user.password]
     result_set = DatabaseConnection.exec_params(sql, params)
   end
@@ -46,5 +46,12 @@ class UserRepository
       found_user = assign_user(result_set[0])
     end
     return found_user
+  end
+
+  def valid_login?(email, password)
+    sql = "SELECT * FROM users WHERE users.email = $1 AND users.password = crypt($2, password);"
+    params = [email, password]
+    result_set = DatabaseConnection.exec_params(sql, params)
+    result_set.to_a.empty? ? false : true
   end
 end

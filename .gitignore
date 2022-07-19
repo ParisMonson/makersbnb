@@ -1,1 +1,3 @@
 spec/seeds/makers_bnb.sql
+spec/spec_helper.rb
+lib/database_connection.rb
