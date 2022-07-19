@@ -19,7 +19,7 @@ describe Application do
   end
 
   context "POST /signup" do
-    it 'when log in details match' do
+    it 'redirects to /signup/success if credentials uniq.' do
 
       response = post('/signup', params = { email: "parismonson@yahoo.com", password: "hash_password" })
       last_response.should be_redirect

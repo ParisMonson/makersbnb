@@ -11,7 +11,7 @@ RSpec.describe ReservationRepository do
     reset_tables
   end
 
-  it "gets all reservations" do
+  xit "gets all reservations" do
     repo =  ReservationRepository.new
     reservations = repo.all
     expect(reservations[0].id).to eq 1
@@ -59,7 +59,7 @@ RSpec.describe ReservationRepository do
   #   expect(reservation[0].number_nights).to eq X
   #   expect(reservation[0].confirmed).to eq X
   # end
-  it "deletes a reservation by id" do
+  xit "deletes a reservation by id" do
     repo = ReservationRepository.new
     repo.delete(1)
     reservations = repo.all
