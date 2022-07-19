@@ -1,3 +1,3 @@
 class User
-  attr_accessor   :host_id, :name, :email, :password, :guest_status
+  attr_accessor :user_id, :first_name, :last_name, :email, :password
 end
