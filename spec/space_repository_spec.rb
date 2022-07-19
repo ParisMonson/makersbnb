@@ -1,10 +1,10 @@
-require_relative "../lib/space_repository"
+# require_relative "../lib/space_repository"
 
-def reset_tables
-  seed_sql = File.read("seeds/makers_bnb_test.sql")
-  connection = PG.connect({ host: "127.0.0.1", dbname: "makers_bnb_test" })
-  coonection.exec(seed_sql)
-end
+# def reset_tables
+#   seed_sql = File.read("seeds/makers_bnb_test.sql")
+#   connection = PG.connect({ host: "127.0.0.1", dbname: "makers_bnb_test" })
+#   connection.exec(seed_sql)
+# end
 
 # describe SpaceRepository do
 #   before(:each) do
