@@ -30,22 +30,22 @@ class SpaceRepository
   end
 
   def update_availability(space)
-    sql = "UPDATE spaces SET available_from = $1, available_to = $2;"
-    result_set = DatabaseConnection.exec_params(sql, [space.available_from, space.available_to])
+    sql = "UPDATE spaces SET available_from = $1, available_to = $2 WHERE space_id = $3;"
+    result_set = DatabaseConnection.exec_params(sql, [space.available_from, space.available_to, space.space_id])
 
     # side effect: returns PG object
   end
 
   def update_description(space)
-    sql = "UPDATE spaces SET description = $1;"
-    result_set = DatabaseConnection.exec_params(sql, [space.description])
+    sql = "UPDATE spaces SET description = $1 WHERE space_id = $2;"
+    result_set = DatabaseConnection.exec_params(sql, [space.description, space.space_id])
 
     # side effect: returns PG object
   end
 
   def update_title(space)
-    sql = "UPDATE spaces SET title = $1;"
-    result_set = DatabaseConnection.exec_params(sql, [space.title])
+    sql = "UPDATE spaces SET title = $1 WHERE space_id = $2;"
+    result_set = DatabaseConnection.exec_params(sql, [space.title, space.space_id])
 
     # side effect: returns PG object
   end
