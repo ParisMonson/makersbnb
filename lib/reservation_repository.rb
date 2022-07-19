@@ -6,6 +6,7 @@ class ReservationRepository
     result_set = DatabaseConnection.exec_params(sql, [])
     convert(result_set)
   end
+  # Integration tests
 
   # def find_by_guest_id(guest_id)
 
