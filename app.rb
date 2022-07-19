@@ -17,8 +17,3 @@ class Application < Sinatra::Base
   post "/signup" do
     # Need UserRepository to check if email is in use
   end
-
-  private
-
-
-end
