@@ -1,8 +1,8 @@
-require_relative 'reservation_repository'
+require_relative '../lib/reservation_repository'
 
 def reset_tables
-  sql_seed = File.read('/Users/paris/Desktop/Projects/makersbnb/spec/seed.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test' })
+  sql_seed = File.read('/Users/paris/Desktop/Projects/makersbnb/spec/makers_bnb_new_seed.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'makers_bnb_test' })
   connection.exec(sql_seed)
 end
 
@@ -11,7 +11,7 @@ RSpec.describe ReservationRepository do
     reset_tables
   end
 
-  xit "gets all reservations" do
+  it "gets all reservations" do
     repo =  ReservationRepository.new
     reservations = repo.all
     expect(reservations[0].id).to eq 1
