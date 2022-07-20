@@ -20,12 +20,12 @@ class UserRepository
     result_set = DatabaseConnection.exec_params(sql, params)
   end
 
-  def delete_user(first_name, last_name, email)
-    sql = "DELETE FROM users WHERE users.first_name = $1 AND users.last_name = $2 AND users.email = $3;"
-    params = [first_name, last_name, email]
-    DatabaseConnection.exec_params(sql, params)
-    return nil
-  end
+  # def delete_user(first_name, last_name, email)
+  #   sql = "DELETE FROM users WHERE users.first_name = $1 AND users.last_name = $2 AND users.email = $3;"
+  #   params = [first_name, last_name, email]
+  #   DatabaseConnection.exec_params(sql, params)
+  #   return nil
+  # end
 
   def find_user(first_name, email)
     sql = "SELECT * FROM users WHERE users.first_name = $1 AND users.email = $2;"
