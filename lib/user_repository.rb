@@ -27,9 +27,9 @@ class UserRepository
   #   return nil
   # end
 
-  def find_user(first_name, email)
-    sql = "SELECT * FROM users WHERE users.first_name = $1 AND users.email = $2;"
-    params = [first_name, email]
+  def find_user(email)
+    sql = "SELECT * FROM users WHERE users.email = $1;"
+    params = [email]
     result_set = DatabaseConnection.exec_params(sql, params)
     if result_set.to_a.empty?
       return nil
