@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS spaces (
 DROP TABLE IF EXISTS "public"."reservations" CASCADE;
 
 CREATE TABLE IF NOT EXISTS reservations (
-  id uuid DEFAULT uuid_generate_v4 (),
+  reservation_id uuid DEFAULT uuid_generate_v4 (),
   host_id uuid NOT NULL,
   guest_id uuid NOT NULL,
   space_id uuid NOT NULL,
