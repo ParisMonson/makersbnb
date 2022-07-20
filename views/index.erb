@@ -6,12 +6,23 @@
   <body>
     <h1>MakersBNB</h1>
 
+    <% if session[:user_id] %>
+    <% end %>
+    
+
     <form action="/signup" class="button">
-      <input type="submit" value="sign up"/>
+      <input type="submit" value="Sign up"/>
+    </form>
 
     <form action="/login" class="button">
-      <input type="submit" value="log in"/>
-
-    <a href="/" class="home">Go back to homepage</a>
+      <input type="submit" value="Login"/>
+    </form>
+    <div>
+      <% @spaces.each do |space| %>
+      <p><%= space.title %></p>
+      <p><%= space.description %></p>
+      <p><%= space.price_per_night%></p><br>
+      <% end %>
+    </div>
   </body>
 </html>
