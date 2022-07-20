@@ -4,17 +4,20 @@
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
-    <form action="/sign_up" class="button">
-      <input type="submit" value="sign up"/>
     <h1>MakersBNB</h1>
+    <h2>Log in</h2>
     </form>
-    <form action="/spaces" method="POST" class="login_form">
+    <form action="/login" method="POST">
       <label> Email: </label>
       <input type="email" name="email"/><br>
       <label> Password: </label> 
       <input type="password" name="password"/><br> 
       <input type="submit" class="submit_button" value="log in"/>
     </form>
+
+    <form action="/signup" class="button">
+      <input type="submit" value="sign up"/>
+
     <a href="/" class="home">Go back to homepage</a>
   </body>
 </html>
