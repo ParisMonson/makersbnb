@@ -58,34 +58,36 @@ RSpec.describe ReservationRepository do
     expect(reservations[1].confirmed).to eq "f"
   end
 
-  it "finds a reservation by Host_id" do
-    reservation_repo = ReservationRepository.new
-    user_repo = UserRepository.new
-    user = user_repo.find_user("Anna", "ajones@example.com")
+  context "Reservation exists" do
+    it "finds a reservation by Host_id" do
+      reservation_repo = ReservationRepository.new
+      user_repo = UserRepository.new
+      user = user_repo.find_user("Anna", "ajones@example.com")
 
-    id = user.user_id
-    reservations = reservation_repo.find_by_host(id)
-    expect(reservations[1].start_date).to eq "2022-09-01"
-    expect(reservations[1].end_date).to eq "2022-09-07"
-    expect(reservations[1].number_night).to eq 6
-    expect(reservations[1].confirmed).to eq "f"
+      id = user.user_id
+      reservations = reservation_repo.find_by_host(id)
+      expect(reservations[1].start_date).to eq "2022-09-01"
+      expect(reservations[1].end_date).to eq "2022-09-07"
+      expect(reservations[1].number_night).to eq 6
+      expect(reservations[1].confirmed).to eq "f"
 
-    expect(reservations[0].start_date).to eq "2022-07-22"
-    expect(reservations[0].end_date).to eq "2022-07-31"
-    expect(reservations[0].number_night).to eq 9
-    expect(reservations[0].confirmed).to eq "t"
-  end
-  it "finds a reservation by Guest_id" do
-    reservation_repo = ReservationRepository.new
-    user_repo = UserRepository.new
-    user = user_repo.find_user("Anna", "ajones@example.com")
+      expect(reservations[0].start_date).to eq "2022-07-22"
+      expect(reservations[0].end_date).to eq "2022-07-31"
+      expect(reservations[0].number_night).to eq 9
+      expect(reservations[0].confirmed).to eq "t"
+    end
+    it "finds a reservation by Guest_id" do
+      reservation_repo = ReservationRepository.new
+      user_repo = UserRepository.new
+      user = user_repo.find_user("Anna", "ajones@example.com")
 
-    id = user.user_id
-    reservations = reservation_repo.find_by_guest(id)
-    expect(reservations[0].start_date).to eq "2022-07-19"
-    expect(reservations[0].end_date).to eq "2022-08-31"
-    expect(reservations[0].number_night).to eq 43
-    expect(reservations[0].confirmed).to eq "t"
+      id = user.user_id
+      reservations = reservation_repo.find_by_guest(id)
+      expect(reservations[0].start_date).to eq "2022-07-19"
+      expect(reservations[0].end_date).to eq "2022-08-31"
+      expect(reservations[0].number_night).to eq 43
+      expect(reservations[0].confirmed).to eq "t"
+    end
   end
   xit "deletes a reservation by id" do
     repo = ReservationRepository.new
