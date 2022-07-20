@@ -21,9 +21,9 @@
     </form>
     <div>
       <% @spaces.each do |space| %>
-      <% host_name = @user_repo.find_by_id(space.host_id).first_name + "_" + @user_repo.find_by_id(space.host_id).last_name%>
-      <% title_url = space.title.split().join("_")%>
-      <a href="/<%="#{host_name}"%>/<%="#{title_url}"%>"> <%= space.title %></a></p>
+      <% host_name = @user_repo.find_by_id(space.host_id).first_name%>
+      <% title = space.title.split().join("_")%>
+      <a href="/<%="#{host_name}"%>/<%="#{title}"%>"><%= space.title %></a></p>
       <p><%= space.description %></p>
       <p><%= space.price_per_night%></p><br>
       <% end %>
