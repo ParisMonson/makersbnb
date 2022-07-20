@@ -34,20 +34,14 @@ describe Application do
   end
 
   context "POST /signup" do
-
-    it "redirects to /signup/success if credentials uniq." do
-      response = post("/signup", params = { email: "parismonson@yahoo.com", password: "hash_password" })
-      last_response.should be_redirect
-      follow_redirect!
-      last_request.url.should == "http://example.org/signup/success"
-
-    xit 'redirects to /spaces if credentials uniq.' do
+    it 'create a new user and redirects to /spaces' do
       response = post('/signup', params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
       # expect(response.status).to eq(200)
       user_repo = UserRepository.new.all
       expect(user_repo).to include(
         have_attributes(first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com")
       ) 
+      ### add tests for spaces
     end
   end
 
@@ -65,7 +59,7 @@ describe Application do
   end
 
   context "POST /login" do
-    xit 'redirects to /spaces if email and password have been validated' do
+    it 'redirects to /spaces if email and password have been validated' do
       response = post('/login', params = { email: "test2@example.com", password: "password2" })
       expect(response.status).to eq(200)    
 
