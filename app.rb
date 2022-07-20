@@ -42,7 +42,7 @@ class Application < Sinatra::Base
   post '/login' do
     repo_users = UserRepository.new
     if repo_users.valid_login?(params[:email], params[:password])
-      @user = repo_users.find_by_email(params[:email])
+      @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
       return erb(:index) ###
       # to add a conditional - if the input data is correct
