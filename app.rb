@@ -2,6 +2,7 @@ require "sinatra/base"
 require "sinatra/reloader"
 require_relative "lib/database_connection"
 require_relative "lib/space_repository"
+require_relative "lib/user_repository"
 
 DatabaseConnection.connect
 
@@ -22,7 +23,8 @@ class Application < Sinatra::Base
 
   get "/" do
     @spaces = SpaceRepository.new.all
-
+    @user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+  
     erb :index
   end
 end
