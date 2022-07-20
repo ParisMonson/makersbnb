@@ -1,5 +1,6 @@
 require_relative '../lib/reservation_repository'
 require_relative '../lib/user_repository'
+require_relative '../lib/space_repository'
 
 def reset_tables
   sql_seed = File.read('/Users/paris/Desktop/Projects/makersbnb/spec/seeds/makers_bnb_seed.sql')
@@ -37,10 +38,9 @@ RSpec.describe ReservationRepository do
   #   reservation.number_nights = X
   #   reservation.confirmed = X
   # end
-  it "finds a reservation by Host_id" do
+  xit "finds a reservation by Host_id" do
     reservation_repo = ReservationRepository.new
     user_repo = UserRepository.new
-    binding.irb
     users = user_repo.all
     id = users[0].user_id
     reservations = reservation_repo.find_by_user(id)
@@ -55,18 +55,13 @@ RSpec.describe ReservationRepository do
     expect(reservations[1].confirmed).to eq "t"
   end
   # xit "finds a reservation by Guest_id" do
-  #   repo = ReservationRepository.new
-  #   reservations = repo.all
-  #   guest_id = reservations[0].guest_id
-
-  #   reservation = repo.find_by_guest_id(guest_id)
-
+    reservation_repo = ReservationRepository.new
+    user_repo = UserRepository.new
+    users = user_repo.all
+    id = users[0].user_id
+    reservations = reservation_repo.find_by_user(id)
     
-  #   expect(reservation[0].start_date).to eq X
-  #   expect(reservation[0].end_date).to eq X
-  #   expect(reservation[0].number_nights).to eq X
-  #   expect(reservation[0].confirmed).to eq X
-  # end
+  end
   xit "deletes a reservation by id" do
     repo = ReservationRepository.new
     repo.delete(1)

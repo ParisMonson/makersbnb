@@ -44,7 +44,7 @@ class ReservationRepository
     reservations = []
     result_set.each do |record|
       reservation = Reservation.new
-      reservation.id = record["id"]
+      reservation.reservation_id = record["reservation_id"]
       reservation.host_id = record["host_id"]
       reservation.guest_id = record["guest_id"]
       reservation.space_id = record["space_id"]
