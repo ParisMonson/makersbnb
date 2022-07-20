@@ -88,7 +88,6 @@ describe UserRepository do
 
   it "finds a user by id" do
     repo = UserRepository.new
-    new_user = User.new
     user_id = repo.all.first.user_id
     found_user = repo.find_by_id(user_id)
     expect(found_user.first_name).to eq(repo.all.first.first_name)
