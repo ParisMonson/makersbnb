@@ -27,8 +27,8 @@ RSpec.describe ReservationRepository do
     user_repo = UserRepository.new
     space_repo = SpaceRepository.new
 
-    host = user_repo.find_user("Anna", "ajones@example.com")
-    guest = user_repo.find_user("John", "test2@example.com")
+    host = user_repo.find_user("ajones@example.com")
+    guest = user_repo.find_user("test2@example.com")
     space = space_repo.find_by_title("review view")
 
     host_id = host.user_id
@@ -62,7 +62,7 @@ RSpec.describe ReservationRepository do
     it "finds a reservation by Host_id" do
       reservation_repo = ReservationRepository.new
       user_repo = UserRepository.new
-      user = user_repo.find_user("Anna", "ajones@example.com")
+      user = user_repo.find_user("ajones@example.com")
 
       id = user.user_id
       reservations = reservation_repo.find_by_host(id)
@@ -79,7 +79,7 @@ RSpec.describe ReservationRepository do
     it "finds a reservation by Guest_id" do
       reservation_repo = ReservationRepository.new
       user_repo = UserRepository.new
-      user = user_repo.find_user("Anna", "ajones@example.com")
+      user = user_repo.find_user("ajones@example.com")
 
       id = user.user_id
       reservations = reservation_repo.find_by_guest(id)
