@@ -1,5 +1,5 @@
-require "user"
-require "database_connection"
+require_relative "user"
+require_relative "database_connection"
 
 class UserRepository
   def all

@@ -1,5 +1,5 @@
-require "user"
-require "user_repository"
+require_relative "../lib/user"
+require_relative "../lib/user_repository"
 
 def reset_users_table
   sql_seed = File.read("spec/seeds/makers_bnb.sql")
