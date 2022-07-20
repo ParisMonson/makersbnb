@@ -4,7 +4,8 @@
   </head>
   <body>
     <h1>MakersBNB</h1>
-    <form action="/new_user" method="POST" class="sign_up_form">
+    <h2>Create Account</h2>
+    <form action="/signup" method="POST">
       <label> First Name: </label>
       <input type="text" name="first_name"/><br>
       <label> Last Name: </label> 
@@ -13,8 +14,13 @@
       <input type="email" name="email"/><br>
       <label> Password: </label> 
       <input type="password" name="password"/><br> 
-      <input type="submit" class="submit_button" value="sing up"/>
+      <label> Submit: </label>
+      <input type="submit" class="submit_button" value="sign up"/>
     </form>
+
+    <form action="/login" class="button">
+          <input type="submit" value="sign up"/>
+
     <a href="/" class="home">Go back to homepage</a>
   </body>
 </html>
