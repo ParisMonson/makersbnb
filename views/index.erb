@@ -7,9 +7,11 @@
     <h1>MakersBNB</h1>
 
     <% if session[:user_id] %>
+    <h2>Welcome <%=@user.first_name @user.last_name%>!</h2>
+    <% else %>
+    <h2>Welcome!</h2>
     <% end %>
     
-
     <form action="/signup" class="button">
       <input type="submit" value="Sign up"/>
     </form>
