@@ -89,11 +89,10 @@ RSpec.describe ReservationRepository do
   end
   xit "deletes a reservation by id" do
     repo = ReservationRepository.new
+    repo.find_by_guest("Anna", "ajones@example.com")
     repo.delete(1)
     reservations = repo.all
     expect(reservations.length).to eq X
     expect(reservations.first.id).to eq(2)
   end
-
-  
 end

@@ -20,20 +20,20 @@ class ReservationRepository
     convert(result_set)
   end
 
-  # def create(reservation)
-  #   sql = "INSERT INTO reservations(host_id, guest_id, space_id, start_date, end_date, number_nights, confirmed)
-  #   VALUES($1, $2, $3, $4, $5, $6, $7);"
-  #   params = [
-  #     reservation.host_id,
-  #     reservation.guest_id,
-  #     reservation.space_id,
-  #     reservation.start_date,
-  #     reservation.end_date,
-  #     reservation.number_nights,
-  #     reservation.confirmed
-  #   ]
-  #   DatabaseConnection.exec_params(sql, params)
-  # end
+  def create(reservation)
+    sql = "INSERT INTO reservations(host_id, guest_id, space_id, start_date, end_date, number_night, confirmed)
+    VALUES($1, $2, $3, $4, $5, $6, $7);"
+    params = [
+      reservation.host_id,
+      reservation.guest_id,
+      reservation.space_id,
+      reservation.start_date,
+      reservation.end_date,
+      reservation.number_night,
+      reservation.confirmed
+    ]
+    DatabaseConnection.exec_params(sql, params)
+  end
 
   def delete(id)
     sql = "DELETE FROM reservations WHERE host_id=$1;"
