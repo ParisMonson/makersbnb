@@ -1,9 +1,11 @@
+
 require 'sinatra/base'
 require 'sinatra/reloader'
 require_relative 'lib/database_connection'
 require_relative 'lib/user_repository'
 require_relative 'lib/space_repository'
-# require_relative 'lib/reservation_repository'
+require_relative 'lib/reservation_repository'
+
 
 DatabaseConnection.connect
 
@@ -49,6 +51,13 @@ class Application < Sinatra::Base
     end
   end
 
-  ###    erb(:spaces) - to copy from Karolina's index page + add "logout" +create space + session
 
+  get "/" do
+    @spaces = SpaceRepository.new.all
+    @user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+  
+    erb :index
+  end
 end
+
+  

@@ -104,4 +104,12 @@ describe SpaceRepository do
     expect(spaces.last.available_from).to eq "2022-08-01"
     expect(spaces.last.available_to).to eq "2022-08-02"
   end
+
+  it "finds a space by title" do
+    repo = SpaceRepository.new
+    space = repo.find_by_title("beach view")[0]
+
+    expect(space.description).to eq "a modern house on the beach"
+    expect(space.price_per_night).to eq "$100.00"
+  end
 end

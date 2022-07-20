@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS reservations (
   end_date date NOT NULL,
   number_night int NOT NULL,
   confirmed boolean,
-  PRIMARY KEY (id),
+  PRIMARY KEY (reservation_id),
   CONSTRAINT fk_host 
     FOREIGN KEY (host_id) REFERENCES users(user_id),
   CONSTRAINT fk_guest 

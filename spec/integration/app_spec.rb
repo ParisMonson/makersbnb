@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 require "rack/test"
-require_relative '../../app'
+require_relative "../../app"
 
 def reset_makers_bnb_table
   seed_sql = File.read('spec/seeds/makers_bnb_seed.sql')
@@ -8,17 +8,19 @@ def reset_makers_bnb_table
   connection.exec(seed_sql)
 end
 
+
 describe Application do
   before(:each) do
     reset_makers_bnb_table
   end
 
   include Rack::Test::Methods
+
   let(:app) { Application.new }
 
   context "GET /signup" do
-    it 'returns 200 OK' do
-      response = get('/signup')
+    it "returns 200 OK" do
+      response = get("/signup")
       expect(response.status).to eq(200)
       expect(response.body).to include("</form>")
       expect(response.body).to include("<html>")
@@ -32,6 +34,13 @@ describe Application do
   end
 
   context "POST /signup" do
+
+    it "redirects to /signup/success if credentials uniq." do
+      response = post("/signup", params = { email: "parismonson@yahoo.com", password: "hash_password" })
+      last_response.should be_redirect
+      follow_redirect!
+      last_request.url.should == "http://example.org/signup/success"
+
     xit 'redirects to /spaces if credentials uniq.' do
       response = post('/signup', params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
       # expect(response.status).to eq(200)
@@ -59,6 +68,14 @@ describe Application do
     xit 'redirects to /spaces if email and password have been validated' do
       response = post('/login', params = { email: "test2@example.com", password: "password2" })
       expect(response.status).to eq(200)    
+
     end
   end
-end 
+
+  context "GET /" do
+    it "shows a list of properties" do
+      response = get("/")
+      expect(response.status).to eq 200
+    end
+  end
+end
