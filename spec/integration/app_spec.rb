@@ -30,6 +30,9 @@ describe Application do
     it "shows a list of properties" do
       response = get("/")
       expect(response.status).to eq 200
+      expect(response.body).to include "Sign up"
+      expect(response.body).to include "Login"
+      expect(response.body).to include '<div class="spaces_list">'
     end
   end
 end
