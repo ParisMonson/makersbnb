@@ -27,10 +27,9 @@ class Application < Sinatra::Base
     new_user.email = params[:email]
     new_user.password = params[:password]
     repo_users.create_user(new_user)
-    @user = repo_users.find_by_email(params[:email])
-    ### to look into user_id and sessions
-    # session[:user_id] = @user.user_id
-    return erb(:spaces) ###
+    @user = repo_users.find_user(params[:email])
+    session[:user_id] = @user.user_id
+    return erb(:index) 
     # to add a conditional - if the input data is correct
   end
 
@@ -41,12 +40,16 @@ class Application < Sinatra::Base
   post "/login" do
     repo_users = UserRepository.new
     if repo_users.valid_login?(params[:email], params[:password])
-      @user = repo_users.find_by_email(params[:email])
-      ### to look into user_id and sessions
+      @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
-      return erb(:spaces) ###
+      return erb(:index) ###
       # to add a conditional - if the input data is correct
     end
+  end
+  
+  get "/logout" do
+    session.delete(:user_id)
+    redirect "/"
   end
 
   get "/" do
