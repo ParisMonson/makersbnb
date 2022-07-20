@@ -1,9 +1,9 @@
-require 'user'
-require 'database_connection'
+require_relative "user"
+require_relative "database_connection"
 
 class UserRepository
   def all
-    sql = 'SELECT * FROM users;'
+    sql = "SELECT * FROM users;"
     result_set = DatabaseConnection.exec_params(sql, [])
     users = []
     result_set.each do |result|
@@ -13,15 +13,6 @@ class UserRepository
     return users
   end
 
-  def assign_user(result)
-    user = User.new
-    user.first_name = result['first_name']
-    user.last_name = result['last_name']
-    user.email = result['email']
-    user.password = result['password']
-    return user
-  end
-
   def create_user(new_user)
     sql = "INSERT INTO users (first_name, last_name, email, password) VALUES
     ($1, $2, $3, crypt($4, gen_salt('bf',4)));"
@@ -29,12 +20,12 @@ class UserRepository
     result_set = DatabaseConnection.exec_params(sql, params)
   end
 
-  def delete_user(first_name, last_name, email)
-    sql = "DELETE FROM users WHERE users.first_name = $1 AND users.last_name = $2 AND users.email = $3;"
-    params = [first_name, last_name, email]
-    DatabaseConnection.exec_params(sql, params)
-    return nil
-  end
+  # def delete_user(first_name, last_name, email)
+  #   sql = "DELETE FROM users WHERE users.first_name = $1 AND users.last_name = $2 AND users.email = $3;"
+  #   params = [first_name, last_name, email]
+  #   DatabaseConnection.exec_params(sql, params)
+  #   return nil
+  # end
 
   def find_user(first_name, email)
     sql = "SELECT * FROM users WHERE users.first_name = $1 AND users.email = $2;"
@@ -53,5 +44,24 @@ class UserRepository
     params = [email, password]
     result_set = DatabaseConnection.exec_params(sql, params)
     result_set.to_a.empty? ? false : true
+  end
+
+  def find_by_id(user_id)
+    sql = "SELECT * FROM users WHERE user_id = $1;"
+    result_set = DatabaseConnection.exec_params(sql, [user_id])
+
+    result_set.each { |record| return assign_user(record) }
+  end
+
+  private
+
+  def assign_user(result)
+    user = User.new
+    user.user_id = result["user_id"]
+    user.first_name = result["first_name"]
+    user.last_name = result["last_name"]
+    user.email = result["email"]
+    user.password = result["password"]
+    return user
   end
 end

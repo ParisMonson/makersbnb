@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS spaces (
 DROP TABLE IF EXISTS "public"."reservations" CASCADE;
 
 CREATE TABLE IF NOT EXISTS reservations (
-  id uuid DEFAULT uuid_generate_v4 (),
+  reservation_id uuid DEFAULT uuid_generate_v4 (),
   host_id uuid NOT NULL,
   guest_id uuid NOT NULL,
   space_id uuid NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS reservations (
   end_date date NOT NULL,
   number_night int NOT NULL,
   confirmed boolean,
-  PRIMARY KEY (id),
+  PRIMARY KEY (reservation_id),
   CONSTRAINT fk_host 
     FOREIGN KEY (host_id) REFERENCES users(user_id),
   CONSTRAINT fk_guest 
