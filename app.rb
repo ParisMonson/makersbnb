@@ -1,11 +1,9 @@
-
-require 'sinatra/base'
-require 'sinatra/reloader'
-require_relative 'lib/database_connection'
-require_relative 'lib/user_repository'
-require_relative 'lib/space_repository'
-require_relative 'lib/reservation_repository'
-
+require "sinatra/base"
+require "sinatra/reloader"
+require_relative "lib/database_connection"
+require_relative "lib/user_repository"
+require_relative "lib/space_repository"
+require_relative "lib/reservation_repository"
 
 DatabaseConnection.connect
 
@@ -35,12 +33,12 @@ class Application < Sinatra::Base
     return erb(:spaces) ###
     # to add a conditional - if the input data is correct
   end
-  
+
   get "/login" do
     return erb(:login)
   end
-  
-  post '/login' do
+
+  post "/login" do
     repo_users = UserRepository.new
     if repo_users.valid_login?(params[:email], params[:password])
       @user = repo_users.find_by_email(params[:email])
@@ -50,7 +48,6 @@ class Application < Sinatra::Base
       # to add a conditional - if the input data is correct
     end
   end
-
 
   get "/" do
     @spaces = SpaceRepository.new.all
@@ -69,5 +66,3 @@ class Application < Sinatra::Base
     erb :individual_space
   end
 end
-
-  
