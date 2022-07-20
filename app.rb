@@ -21,14 +21,15 @@ class Application < Sinatra::Base
 
   post "/signup" do
     repo_users = UserRepository.new
-    @user = User.new
-    @user.first_name = params[:first_name]
-    @user.last_name = params[:last_name]
-    @user.email = params[:email]
-    @user.password = params[:password]
-    repo_users.create(@user)
+    new_user = User.new
+    new_user.first_name = params[:first_name]
+    new_user.last_name = params[:last_name]
+    new_user.email = params[:email]
+    new_user.password = params[:password]
+    repo_users.create_user(new_user)
+    @user = repo_users.find_by_email(params[:email])
     ### to look into user_id and sessions
-    session[:user_id] = @user.user_id
+    # session[:user_id] = @user.user_id
     return erb(:spaces) ###
     # to add a conditional - if the input data is correct
   end
@@ -38,9 +39,9 @@ class Application < Sinatra::Base
   end
   
   post '/login' do
-    user_repo = UserRepository.new
-    if user_repo.valid_login?(params[:email], params[:password])
-      @user = user_repo.find_by_email(params[:email])
+    repo_users = UserRepository.new
+    if repo_users.valid_login?(params[:email], params[:password])
+      @user = repo_users.find_by_email(params[:email])
       ### to look into user_id and sessions
       session[:user_id] = @user.user_id
       return erb(:spaces) ###
