@@ -4,11 +4,13 @@
   </head>
   <body>
     <h1>MakersBNB</h1>
-   
-   <div>
-ONE SPACE title, address, name of the host, available from - to, price_per_night
-   </div>
 
+   <div>
+      <p><%=@space.title%></p>
+      <p><%=@space.description%></p>
+      <p><%=@space.price_per_night%></p>
+      <p>The host of this space is: <%=@host_name%></p>
+   </div>
 
     <a href="/" class="home">Go back to homepage</a>
   </body>

@@ -1,11 +1,9 @@
-
-require 'sinatra/base'
-require 'sinatra/reloader'
-require_relative 'lib/database_connection'
-require_relative 'lib/user_repository'
-require_relative 'lib/space_repository'
-require_relative 'lib/reservation_repository'
-
+require "sinatra/base"
+require "sinatra/reloader"
+require_relative "lib/database_connection"
+require_relative "lib/user_repository"
+require_relative "lib/space_repository"
+require_relative "lib/reservation_repository"
 
 DatabaseConnection.connect
 
@@ -35,12 +33,12 @@ class Application < Sinatra::Base
     return erb(:spaces) ###
     # to add a conditional - if the input data is correct
   end
-  
+
   get "/login" do
     return erb(:login)
   end
-  
-  post '/login' do
+
+  post "/login" do
     repo_users = UserRepository.new
     if repo_users.valid_login?(params[:email], params[:password])
       @user = repo_users.find_by_email(params[:email])
@@ -51,13 +49,20 @@ class Application < Sinatra::Base
     end
   end
 
-
   get "/" do
     @spaces = SpaceRepository.new.all
-    @user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
-  
+    @user_repo = UserRepository.new
+    @logged_in_user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+
     erb :index
   end
-end
 
-  
+  get "/:host_name/:title" do
+    @host_name = params[:host_name].split("_").join(" ")
+    @title = params[:title].split("_").join(" ")
+
+    @space = SpaceRepository.new.find_by_title(@title)[0]
+
+    erb :individual_space
+  end
+end

@@ -7,7 +7,7 @@
     <h1>MakersBNB</h1>
 
     <% if session[:user_id] %>
-    <h2>Welcome <%=@user.first_name @user.last_name%>!</h2>
+    <h2>Welcome <%=@logged_in_user.first_name @logged_in_user.last_name%>!</h2>
     <% else %>
     <h2>Welcome!</h2>
     <% end %>
@@ -21,10 +21,13 @@
     </form>
     <div class="spaces_list">
       <% @spaces.each do |space| %>
-      <p><%= space.title %></p>
+      <% host_name = @user_repo.find_by_id(space.host_id).first_name%>
+      <% title = space.title.split().join("_")%>
+      <a href="/<%="#{host_name}"%>/<%="#{title}"%>"><%= space.title %></a></p>
       <p><%= space.description %></p>
       <p><%= space.price_per_night%></p><br>
       <% end %>
     </div>
   </body>
 </html>
+
