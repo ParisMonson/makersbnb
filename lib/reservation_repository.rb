@@ -8,15 +8,17 @@ class ReservationRepository
   end
   # Integration tests
 
-  def find_by_user(user_id)
+  def find_by_host(host_id)
     sql = "SELECT * FROM reservations WHERE host_id=$1;"
-    result_set = DatabaseConnection.exec_params(sql, [user_id])
+    result_set = DatabaseConnection.exec_params(sql, [host_id])
     convert(result_set)
   end
 
-  # def find_by_host_id(host_id)
-
-  # end
+  def find_by_guest(guest_id)
+    sql = "SELECT * FROM reservations WHERE guest_id=$1;"
+    result_set = DatabaseConnection.exec_params(sql, [guest_id])
+    convert(result_set)
+  end
 
   # def create(reservation)
   #   sql = "INSERT INTO reservations(host_id, guest_id, space_id, start_date, end_date, number_nights, confirmed)
