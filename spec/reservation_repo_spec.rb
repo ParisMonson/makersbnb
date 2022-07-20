@@ -3,7 +3,7 @@ require_relative '../lib/user_repository'
 require_relative '../lib/space_repository'
 
 def reset_tables
-  sql_seed = File.read('/Users/paris/Desktop/Projects/makersbnb/spec/seeds/makers_bnb_seed.sql')
+  sql_seed = File.read('spec/seeds/makers_bnb_seed.sql')
   connection = PG.connect({ host: '127.0.0.1', dbname: 'makers_bnb_test' })
   connection.exec(sql_seed)
 end
