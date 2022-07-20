@@ -7,7 +7,7 @@ require_relative 'lib/space_repository'
 require_relative 'lib/reservation_repository'
 
 
-# DatabaseConnection.connect
+DatabaseConnection.connect
 
 class Application < Sinatra::Base
   # This allows the app code to refresh
@@ -29,7 +29,7 @@ class Application < Sinatra::Base
     new_user.email = params[:email]
     new_user.password = params[:password]
     repo_users.create_user(new_user)
-    @user = repo_users.find_by_email(params[:email])
+    @user = repo_users.find_user(params[:first_name], params[:email])
     session[:user_id] = @user.user_id
     return erb(:index) 
     # to add a conditional - if the input data is correct
