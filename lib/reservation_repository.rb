@@ -8,9 +8,11 @@ class ReservationRepository
   end
   # Integration tests
 
-  # def find_by_guest_id(guest_id)
-
-  # end
+  def find_by_user(user_id)
+    sql = "SELECT * FROM reservations WHERE host_id=$1;"
+    result_set = DatabaseConnection.exec_params(sql, [user_id])
+    convert(result_set)
+  end
 
   # def find_by_host_id(host_id)
 
@@ -32,7 +34,7 @@ class ReservationRepository
   # end
 
   def delete(id)
-    sql = "DELETE FROM reservations WHERE id=$1;"
+    sql = "DELETE FROM reservations WHERE host_id=$1;"
     DatabaseConnection.exec_params(sql, [id])
   end
 
@@ -48,9 +50,10 @@ class ReservationRepository
       reservation.space_id = record["space_id"]
       reservation.start_date = record["start_date"]
       reservation.end_date = record["end_date"]
-      reservation.number_nights = record["number_nights"]
+      reservation.number_night = record["number_night"].to_i
       reservation.confirmed = record["confirmed"]
-      reservations << reservation 
+      reservations << reservation
     end
+    reservations
   end
 end
