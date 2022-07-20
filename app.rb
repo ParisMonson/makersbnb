@@ -23,8 +23,18 @@ class Application < Sinatra::Base
 
   get "/" do
     @spaces = SpaceRepository.new.all
-    @user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
-  
+    @user_repo = UserRepository.new
+    @logged_in_user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+
     erb :index
+  end
+
+  get "/:host_name/:title" do
+    @host_name = params[:host_name].split("_").join(" ")
+    @title = params[:title].split("_").join(" ")
+
+    @space = SpaceRepository.new.find_by_title(@title)[0]
+
+    erb :individual_space
   end
 end
