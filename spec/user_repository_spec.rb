@@ -52,19 +52,19 @@ describe UserRepository do
   #   end
   # end
 
-  context "find_user(first_name, email)#" do
+  context "find_user(email)#" do
     it "returns user details correctly for correct firstname and email" do
       repo = UserRepository.new
       test_id = repo.all[0].user_id
       user = repo.find_by_id(test_id)
-      found_user = repo.find_user(user.first_name, user.email)
+      found_user = repo.find_user(user.email)
       expect(found_user.user_id).to eq(test_id)
     end
 
     it "does not return user details for incorrect firstname and email" do
       repo = UserRepository.new
       user_id = repo.all[0].user_id
-      found_user = repo.find_user("Paris", "joe@mail.com")
+      found_user = repo.find_user("joe@mail.com")
       expect(found_user).to eq(nil)
     end
   end
