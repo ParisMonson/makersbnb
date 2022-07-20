@@ -46,6 +46,13 @@ class UserRepository
     result_set.to_a.empty? ? false : true
   end
 
+  def find_by_id(user_id)
+    sql = "SELECT * FROM users WHERE user_id = $1;"
+    result_set = DatabaseConnection.exec_params(sql, [user_id])
+
+    result_set.each { |record| return assign_user(record) }
+  end
+
   private
 
   def assign_user(result)
