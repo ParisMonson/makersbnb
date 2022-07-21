@@ -143,5 +143,4 @@ class Application < Sinatra::Base
     repo.confirm_reservation(params[:reservation_id])
     redirect "/requests"
   end
- end
 end
