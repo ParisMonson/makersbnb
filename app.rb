@@ -20,6 +20,7 @@ class Application < Sinatra::Base
   end
 
   post "/signup" do
+    #I think we need to check that the email is uniq at this stage <<<<<<
     repo_users = UserRepository.new
     new_user = User.new
     new_user.first_name = params[:first_name]
@@ -29,8 +30,11 @@ class Application < Sinatra::Base
     repo_users.create_user(new_user)
     @user = repo_users.find_user(params[:email])
     session[:user_id] = @user.user_id
-    return erb(:index) 
+    redirect "/signup/success" 
     # to add a conditional - if the input data is correct
+  end
+  get "/signup/success" do
+    return erb(:signup_success)
   end
 
   get "/login" do
@@ -42,9 +46,14 @@ class Application < Sinatra::Base
     if repo_users.valid_login?(params[:email], params[:password])
       @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
-      return erb(:index) ###
+      redirect "/"
+       ###
       # to add a conditional - if the input data is correct
     end
+    redirect "/login/fail"
+  end
+  get "/login/fail" do
+    return erb(:login_fail)
   end
   
   get "/logout" do

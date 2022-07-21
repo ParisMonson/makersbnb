@@ -33,10 +33,11 @@ describe Application do
   end
 
   context "POST /signup" do
-    it 'create a new user and redirects to /spaces' do
+    it 'create a new user and redirects to /signup/success' do
       response = post('/signup', params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
     
-      # expect(response.status).to eq(200)
+      expect(last_response).to be_redirect
+
       user_repo = UserRepository.new.all
       expect(user_repo).to include(
         have_attributes(first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com")
@@ -59,9 +60,9 @@ describe Application do
   end
 
   context "POST /login" do
-    it 'redirects to /spaces if email and password have been validated' do
+    it 'redirects to / if email and password have been validated' do
       response = post('/login', params = { email: "test2@example.com", password: "password2" })
-      expect(response.status).to eq(200)    
+      expect(response).to be_redirect  
     end
   end
 
@@ -82,6 +83,27 @@ describe Application do
       expect(response.body).to include "<h1>MakersBNB</h1>"
       expect(response.body).to include '<a href="/" class="home">Go back to homepage</a>'
       expect(response.body).to include "<p>The host of this space is:"
+    end
+  end
+  context "GET /signup/success" do
+    it "shows a signup success message" do
+      response = get("/signup/success")
+      expect(response.status).to eq 200
+      expect(response.body).to include("You have successfully created an account!")
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("<a href='/login'>")
+      expect(response.body).to include("<a href='/'>")
+    end
+  end
+  context "GET /login/fail" do
+    it "shows a wrong email or password message" do
+      response = get("/login/fail")
+      expect(response.status).to eq 200
+      expect(response.body).to include("<h1>The password or email you entered is incorrect!</h1>")
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("<body>")
+      expect(response.body).to include("<a href='/login'>")
+      expect(response.body).to include("a href='/signup'>")
     end
   end
 end

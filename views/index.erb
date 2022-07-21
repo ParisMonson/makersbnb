@@ -7,7 +7,7 @@
     <h1>MakersBNB</h1>
 
     <% if session[:user_id] %>
-    <h2>Welcome <%=@logged_in_user.first_name @logged_in_user.last_name%>!</h2>
+    <h2>Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
     <% else %>
     <h2>Welcome!</h2>
     <% end %>
