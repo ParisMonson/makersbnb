@@ -7,18 +7,38 @@
     <h1>MakersBNB</h1>
 
     <% if session[:user_id] %>
+
     <h2>Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
+    <form action="/logout" class="button" style="display: inline-block;">
+      <input type="submit" value="Log out" style="position: absolute; top: 30px;padding:2px;"/>
+    </form>
+    <div style="position: relative; bottom: 0px">
+    <h3>Book a space</h3><br>
+    <form action="/newspace" class="button" style="display: inline-block;">
+      <input type="submit" value="List a Space" style="margin-bottom: 20px;padding:5px; position: relative; left: -450px;"/>
+    </form>
+    <form action="/">
+      <label>Available from:</label>
+      <input type="date" name="available_from"/>
+      <label>Available to:</label>
+      <input type="date" name="available_to"/> 
+      <button>Submit</button>
+      </form>
+    </div>
+
     <% else %>
+
     <h2>Welcome!</h2>
+    <h3>To book a space just sign up or login!</h3>
+    <form action="/signup" class="button" style="display: inline-block;">
+      <input type="submit" value="Sign up" style="position: absolute; top: 30px;padding:2px"/>
+    </form>
+    <form action="/login" class="button" style="display: inline-block;">
+      <input type="submit" value="Login" style="position: absolute; top:60px;padding:2px;"/>
+    </form>
+    
     <% end %>
     
-    <form action="/signup" class="button">
-      <input type="submit" value="Sign up"/>
-    </form>
-
-    <form action="/login" class="button">
-      <input type="submit" value="Login"/>
-    </form>
     <div class="spaces_list">
       <% @spaces.each do |space| %>
       <% host_name = @user_repo.find_by_id(space.host_id).first_name%>
