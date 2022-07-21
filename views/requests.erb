@@ -5,7 +5,7 @@
     <a href='/logout'>Logout</a><br>
 
     <h2>Requests I've Recieved</h2>
-    <%@repo.find_by_host(@id).each do |reservation|%>
+    <%@reservation_repo.find_by_host(@id).each do |reservation|%>
     <div id="requests_for_me" align="left">
       <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
       Requested by: <%=@user_repo.find_by_id(reservation.guest_id).first_name%> <%=@user_repo.find_by_id(reservation.guest_id).last_name%>
@@ -19,7 +19,7 @@
     <%end%>
 
     <h2>Requests I've Made</h2>
-    <%@repo.find_by_guest(@id).each do |reservation|%>
+    <%@reservation_repo.find_by_guest(@id).each do |reservation|%>
     <div id="requests_for_me" align="left">
       <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
       Host Name: <%=@user_repo.find_by_id(reservation.host_id).first_name%> <%=@user_repo.find_by_id(reservation.host_id).last_name%>

@@ -70,7 +70,7 @@ class Application < Sinatra::Base
   end
   get "/requests" do
     unless session[:user_id].nil?
-      @repo = ReservationRepository.new
+      @reservation_repo = ReservationRepository.new
       @space_repo = SpaceRepository.new
       @user_repo = UserRepository.new
       @id = session[:user_id]
