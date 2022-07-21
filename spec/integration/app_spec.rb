@@ -132,7 +132,8 @@ describe Application do
     end
   end
   context "GET /requests" do
-    it "returns 200 OK" do
+    it "returns 200 OK when logged in" do
+      post("/login", params={email: "ajones@example.com", password: "password3"})
       response = get("/requests")
       expect(response.status).to eq 200
       expect(response.body).to include("<html>")

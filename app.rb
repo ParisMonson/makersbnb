@@ -69,12 +69,14 @@ class Application < Sinatra::Base
     erb :index
   end
   get "/requests" do
-    @repo = ReservationRepository.new
-    @space_repo = SpaceRepository.new
-    @user_repo = UserRepository.new
-    @id = session[:user_id]
-
-    return erb(:requests)
+    unless session[:user_id].nil?
+      @repo = ReservationRepository.new
+      @space_repo = SpaceRepository.new
+      @user_repo = UserRepository.new
+      @id = session[:user_id]
+      return erb(:requests)
+    end
+    redirect "/login"
   end
 
   get "/:space_id" do
