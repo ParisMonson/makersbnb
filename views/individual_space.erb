@@ -12,7 +12,7 @@
       <p>The host of this space is: <%=@host_name%></p>
    </div><br>
 
-   <%if session[:user_id]%>
+   <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
    <p>Choose the dates of your stay:</p><br>
    <form action="/requests">
       <label>From:</label>
