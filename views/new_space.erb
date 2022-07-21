@@ -5,7 +5,8 @@
   <body>
     <h1>MakersBNB</h1>
    
-<form action="/new_space" method="POST" class="add a space">
+<form action="/newspace" method="POST">
+      <input type="hidden" name="host_id" value=<%@host_id%>/>
       <label> Title: </label>
       <input type="text" name="title"/><br>
       <label> Short description: </label> 
@@ -16,17 +17,10 @@
       <input type="int" name="price_per_night"/><br> 
       <label> Available form: </label> 
       <input type="date" name="available_from"/><br> 
-
-TYPE =DATE. THE FORMAT IS DD/MM/YYYY
-IN OUR SQL IS IS YYYY-MM-DD
-NOT SURE WHETHER IT MIGHT INTERFERE
-
-
       <label> Available to: </label> 
       <input type="date" name="available_to"/><br> 
-      <input type="submit" class="submit_button" value="sing up"/>
+      <input type="submit" class="submit_button" value="create space"/>
     </form>
-
 
     <a href="/" class="home">Go back to homepage</a>
   </body>

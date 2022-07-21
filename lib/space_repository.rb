@@ -23,7 +23,7 @@ class SpaceRepository
   end
 
   def create(space)
-    sql = "INSERT INTO spaces (title, description, address, price_per_night, available_from, available_to, host_id) VALUES ($1, $2, $3, $4, $5, $6, $7)"
+    sql = "INSERT INTO spaces (title, description, address, price_per_night, available_from, available_to, host_id) VALUES ($1, $2, $3, $4, $5, $6, $7);"
     result_set = DatabaseConnection.exec_params(sql, [space.title, space.description, space.address, space.price_per_night, space.available_from, space.available_to, space.host_id])
 
     # side effect: returns PG object

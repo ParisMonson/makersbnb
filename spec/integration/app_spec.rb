@@ -106,4 +106,46 @@ describe Application do
       expect(response.body).to include("a href='/signup'>")
     end
   end
+
+  context "GET /newspace" do
+    it "returns 200 OK and form for create a new space" do
+      login = post('/login', params = { email: "test2@example.com", password: "password2" })
+      response = get("/newspace")
+      expect(response.status).to eq 200
+      expect(response.body).to include('<form action="/newspace" method="POST">')
+      expect(response.body).to include('<input type="text" name="title"/><br>')
+      expect(response.body).to include('<input type="text" name="description"/><br>')
+      expect(response.body).to include('<input type="text" name="address"/><br>')
+      expect(response.body).to include('<input type="int" name="price_per_night"/><br>')
+      expect(response.body).to include('<input type="date" name="available_from"/><br>')
+      expect(response.body).to include('<input type="date" name="available_to"/><br>')
+      expect(response.body).to include('<input type="submit" class="submit_button" value="create space"/>')
+    end
+  end
+
+  context "POST /newspace" do
+    it "returns 200 OK and adds the new user to the database" do
+      login = post('/login', params = { email: "test2@example.com", password: "password2" })
+      response = post('/newspace', params = { title: "new title", 
+        description: "new description", 
+        address: "new address", 
+        price_per_night: "$250.00"}
+        #available_from: "2022-07-20",
+        #available_to: "2022-09-20" }
+      )
+    
+      #expect(last_response).to be_redirect
+
+      space_repo = SpaceRepository.new.all
+      expect(space_repo).to include(
+        have_attributes(title: "new title", 
+        description: "new description",
+        address: "new address", 
+        price_per_night: "$250.00")
+        #available_from: "2022-07-20",
+        #available_to: "2022-09-20")
+      ) 
+      ### add tests for spaces
+    end
+  end
 end

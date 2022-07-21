@@ -77,4 +77,35 @@ class Application < Sinatra::Base
 
     erb :individual_space
   end
+
+  get "/newspace" do
+    p session[:user_id]
+    if session[:user_id] == nil
+      return "not logged in"
+    end
+    return erb(:new_space)
+  end
+
+  post "/newspace" do
+    p session[:user_id]
+    @host_id = session[:user_id]
+    #  @user = repo_users.find_user(params[:email])
+   # session[:user_id]
+    repo_spaces = SpaceRepository.new
+    new_space = Space.new
+    p new_space.title = params[:title]
+    p new_space.description = params[:description]
+   p  new_space.address = params[:address]
+    p new_space.price_per_night = params[:price_per_night]
+    # new_space.available_from = params[:available_from]
+    # new_space.available_to = params[:available_to]
+    p new_space.host_id = session[:user_id]
+    repo_spaces.create(new_space)
+
+   
+    # redirect "/signup/success" 
+  end
 end
+
+
+#---   <input type="hidden" name="host_id" value=<%session[:user_id]%>/>
