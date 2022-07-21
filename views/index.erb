@@ -41,9 +41,7 @@
     
     <div class="spaces_list">
       <% @spaces.each do |space| %>
-      <% host_name = @user_repo.find_by_id(space.host_id).first_name%>
-      <% title = space.title.split().join("_")%>
-      <a href="/<%="#{host_name}"%>/<%="#{title}"%>"><%= space.title %></a></p>
+      <a href="/<%="#{space.space_id}"%>"><%= space.title %></a></p>
       <p><%= space.description %></p>
       <p><%= space.price_per_night%></p><br>
       <% end %>
