@@ -4,7 +4,7 @@
     <a href='/'>Home</a><br>
     <a href='/logout'>Logout</a><br>
 
-    <h2>Requests For Me</h2>
+    <h2>Requests I've Recieved</h2>
     <%@repo.find_by_host(@id).each do |reservation|%>
     <div id="requests_for_me" align="left">
       <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
@@ -15,7 +15,7 @@
     </div><br>
     <%end%>
 
-    <h2>Requests By Me</h2>
+    <h2>Requests I've Made</h2>
     <%@repo.find_by_guest(@id).each do |reservation|%>
     <div id="requests_for_me" align="left">
       <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
