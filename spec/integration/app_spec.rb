@@ -161,11 +161,16 @@ describe Application do
 
     it "returns fails to create a new space if information is missing" do
       login = post('/login', params = { email: "test2@example.com", password: "password2" })
-
       repo = SpaceRepository.new
       new_space = double(:space, address: "address", description: "description", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id)
       expect{repo.create(new_space)}
     end
-      
+
+    it "returns fails to create a new space if price per night is not digits and '.'" do
+      login = post('/login', params = { email: "test2@example.com", password: "password2" })
+      repo = SpaceRepository.new
+      new_space = double(:space, price_per_night: 'hello!', address: "address", description: "description", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id)
+      expect{repo.create(new_space)}
+    end
   end
 end

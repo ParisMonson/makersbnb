@@ -9,6 +9,12 @@
       <h2>Some information is missing, please try again.</h2>
     <%elsif @error == "price format error"%><br>
       <h2>Price per night must be numbers only, please try again.</h2>
+    <%elsif @error == "invalid title"%><br>
+      <h2>Title must be 50 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
+    <%elsif @error == "invalid description"%><br>
+      <h2>Description must be 500 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
+    <%elsif @error == "invalid address"%><br>
+      <h2>Address must be 100 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
     <% end %>
    
 <form action="/newspace" method="POST">

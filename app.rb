@@ -92,6 +92,7 @@ class Application < Sinatra::Base
     @error = nil
     input_validation
     if @error != nil
+      @error
       return erb(:new_space)
     else
       repo_spaces = SpaceRepository.new
@@ -111,10 +112,16 @@ class Application < Sinatra::Base
   end
 
   def input_validation
-    if (params[:title].length == 0 || params[:address].length == 0 || params[:price_per_night].length == 0)
+    if (params[:title].length == 0 || params[:address].length == 0 || params[:price_per_night].length == 0 || params[:available_from].length == 0 || params[:available_to.length == 0])
       @error = "missing information error"
     elsif params[:price_per_night].match?(/[^\d.]/)
       @error = "price format error"
+    elsif params[:title].match?(/[^\w\s?!.,']{10,50}/i)
+      @error = "invalid title"
+    elsif params[:description].match?(/[^\w\s?!.,']{10,500}/i)
+      @error = "invalid description" 
+    elsif params[:address].match?(/[^\w\s.,']{10,100}/i)
+      @error = "invalid address"
     end
     return @error
   end
