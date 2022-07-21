@@ -100,13 +100,14 @@ describe Application do
     end
   end
 
-  context "GET /:host_name/:title" do
+  context "GET /:space_id" do
     it "shows an individual space page" do
-      response = get("/John/beach_view")
+      space_id = SpaceRepository.new.all[0].space_id
+      response = get("#{space_id}")
       expect(response.status).to eq 200
       expect(response.body).to include "<h1>MakersBNB</h1>"
       expect(response.body).to include '<a href="/" class="home">Go back to homepage</a>'
-      expect(response.body).to include "<p>The host of this space is:"
+      expect(response.body).to include "<p>The host of this space is: John"
     end
   end
   context "GET /signup/success" do
