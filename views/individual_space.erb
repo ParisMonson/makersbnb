@@ -15,7 +15,7 @@
    <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
    <% session[:space] = @space %>
    <p>Choose the dates of your stay:</p><br>
-   <form action="/request/?">
+   <form action="/request/?" method="POST">
       <label>From:</label>
       <input type="date" min=<%=@space.available_from%> name="available_from"/>
       <label>To:</label>
