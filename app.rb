@@ -33,6 +33,7 @@ class Application < Sinatra::Base
     redirect "/signup/success"
     # to add a conditional - if the input data is correct
   end
+  
   get "/signup/success" do
     return erb(:signup_success)
   end
@@ -52,6 +53,7 @@ class Application < Sinatra::Base
     end
     redirect "/login/fail"
   end
+  
   get "/login/fail" do
     return erb(:login_fail)
   end
@@ -68,13 +70,16 @@ class Application < Sinatra::Base
 
     erb :index
   end
-
-  get "/:space_id" do
-    space_id = params[:space_id]
-    @space = SpaceRepository.new.find_by_space_id(space_id)[0]
-    @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
-
-    erb :individual_space
+  
+  get "/requests" do
+    unless session[:user_id].nil?
+      @reservation_repo = ReservationRepository.new
+      @space_repo = SpaceRepository.new
+      @user_repo = UserRepository.new
+      @id = session[:user_id]
+      return erb(:requests)
+    end
+    redirect "/login"
   end
 
   get "/newspace" do
@@ -124,4 +129,19 @@ class Application < Sinatra::Base
     end
     return @error
   end
+  
+   get "/:space_id" do
+    space_id = params[:space_id]
+    @space = SpaceRepository.new.find_by_space_id(space_id)[0]
+    @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
+
+    erb :individual_space
+   end
+
+  post "/requests/:reservation_id" do
+    repo = ReservationRepository.new
+    repo.confirm_reservation(params[:reservation_id])
+    redirect "/requests"
+  end
+ end
 end
