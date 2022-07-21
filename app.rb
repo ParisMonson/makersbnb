@@ -70,15 +70,23 @@ class Application < Sinatra::Base
     redirect "/"
   end
 
-  get "/request/?" do
+  post "/request/?" do
     available_from = params[:available_from]
     available_to = params[:available_to]
     date_regex = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
 
     if date_regex.match?(available_from) && date_regex.match?(available_to)
-      return erb :request_success
+      redirect "/request/success"
     end
 
+    redirect "/request/fail"
+  end
+
+  get "/request/success" do
+    erb :request_success
+  end
+
+  get "/request/fail" do
     erb :request_fail
   end
 
