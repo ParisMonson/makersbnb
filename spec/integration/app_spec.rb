@@ -33,15 +33,15 @@ describe Application do
   end
 
   context "POST /signup" do
-    it 'create a new user and redirects to /signup/success' do
-      response = post('/signup', params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
-    
+    it "create a new user and redirects to /signup/success" do
+      response = post("/signup", params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
+
       expect(last_response).to be_redirect
 
       user_repo = UserRepository.new.all
       expect(user_repo).to include(
         have_attributes(first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com")
-      ) 
+      )
       ### add tests for spaces
     end
   end
@@ -60,19 +60,43 @@ describe Application do
   end
 
   context "POST /login" do
-    it 'redirects to / if email and password have been validated' do
-      response = post('/login', params = { email: "test2@example.com", password: "password2" })
-      expect(response).to be_redirect  
+    it "redirects to / if email and password have been validated" do
+      response = post("/login", params = { email: "test2@example.com", password: "password2" })
+      expect(response).to be_redirect
     end
   end
 
   context "GET /" do
-    it "shows a list of properties" do
-      response = get("/")
-      expect(response.status).to eq 200
-      expect(response.body).to include "Sign up"
-      expect(response.body).to include "Login"
-      expect(response.body).to include '<div class="spaces_list">'
+    context "user not logged in" do
+      it "shows a list of properties" do
+        response = get("/")
+        expect(response.status).to eq 200
+        expect(response.body).to include "<h3>To book a space just sign up or login!</h3>"
+        expect(response.body).to include "Sign up"
+        expect(response.body).to include "Login"
+        expect(response.body).to include '<div class="spaces_list">'
+        expect(response.body).to include "<h2>Welcome!</h2>"
+        expect(response.body).to include '<input type="submit" value="Login"'
+        expect(response.body).to include '<input type="submit" value="Sign up"'
+      end
+    end
+    context "user logged in" do
+      it "shows a list of properties, log out button and calendars" do
+        post("/login", params = { email: "test2@example.com", password: "password2" })
+        response = get("/")
+        expect(response.status).to eq 200
+        expect(response.body).to include "<h3>Book a space</h3>"
+        expect(response.body).to include '<form action="/logout"'
+        expect(response.body).to include "Log out"
+        expect(response.body).to include '<div class="spaces_list">'
+        expect(response.body).to include "<h2>Welcome John Parker!</h2>"
+        expect(response.body).to include '<input type="submit" value="Log out"'
+        expect(response.body).to include '<form action="/newspace"'
+        expect(response.body).to include "<label>Available from:</label>"
+        expect(response.body).to include '<input type="date" name="available_from"/>'
+        expect(response.body).to include "<label>Available to:</label>"
+        expect(response.body).to include '<input type="date" name="available_to"/>'
+      end
     end
   end
 
