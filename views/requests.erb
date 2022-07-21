@@ -1,9 +1,10 @@
 <html>
 <body>
     <h1>Requests</h1>
+    <h2>Requests For Me</h2>
     <%@repo.find_by_host(@id).each do |reservation|%>
     <div id="requests_for_me" align="left">
-      <%=@space_repo.find_by_space_id(reservation.space_id)[0].title%>
+      <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
       Requested by: <%=@user_repo.find_by_id(reservation.guest_id).first_name%>
       Requested Dates: <%=reservation.start_date%> to <%=reservation.end_date%>
       Number of Nights: <%=reservation.number_night%>
@@ -11,9 +12,16 @@
     </div><br>
     <%end%>
 
-    <div id="requests_by_me" align="right">
-    
-    </div>
+    <h2>Requests By Me</h2>
+    <%@repo.find_by_host(@id).each do |reservation|%>
+    <div id="requests_for_me" align="left">
+      <a href='/<%=reservation.space_id%>'><%=@space_repo.find_by_space_id(reservation.space_id)[0].title%></a>
+      Requested by: <%=@user_repo.find_by_id(reservation.guest_id).first_name%>
+      Requested Dates: <%=reservation.start_date%> to <%=reservation.end_date%>
+      Number of Nights: <%=reservation.number_night%>
+      Confirmed: <%=reservation.confirmed%>
+    </div><br>
+    <%end%>
   </body>
 
 </html>
