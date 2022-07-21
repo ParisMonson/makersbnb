@@ -56,6 +56,13 @@ class SpaceRepository
     # side effect: returns PG object
   end
 
+  def find(space_id)
+    sql = "SELECT * FROM spaces WHERE space_id = $1;"
+    result_set = DatabaseConnection.exec_params(sql, [space_id])
+
+    map_PG_to_objects(result_set) # returns array of space objects
+  end
+
   private
 
   def map_PG_to_objects(result_set)
