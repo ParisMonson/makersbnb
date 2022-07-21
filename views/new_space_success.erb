@@ -1,0 +1,22 @@
+<html>
+  <head> 
+   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
+  </head>
+  <body>
+    <h1>MakersBNB</h1><br>
+      <h2>Congratulations <%=@host.first_name%>, you have just created a new space!</h2>
+
+
+   <div>
+      <p>Title: <%=@space.title%></p>
+      <p>Description: <%=@space.description%></p>
+      <p>Address: <%=@space.address%></p>
+      <p>Price per night: <%=@space.price_per_night%></p>
+      <p>Available from: <%=@space.available_from%></p>
+      <p>Available to: <%=@space.available_to%></p>
+   </div>
+
+    <a href="/newspace" class="button">Create a new space</a><br><br>
+    <a href="/" class="home">Go back to homepage</a>
+  </body>
+</html> 
