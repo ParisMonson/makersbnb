@@ -1,11 +1,10 @@
-<%space = session[:space]%>
-
 <html>
   <head> 
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
     <h1>MakersBNB</h1><br>
+    <%space = session[:space]%>
     <p>You have successfully sent a request to stay at <%=UserRepository.new.find_by_id(space.host_id).first_name%>'s Space: <%=space.title%>.</p>
    
     <a href="/" class="home">Go to homepage</a>
