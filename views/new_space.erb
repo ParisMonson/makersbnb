@@ -3,10 +3,16 @@
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
-    <h1>MakersBNB</h1>
+    <h1>MakersBNB</h1><br>
+    <h2>Create a new space:</h2>
+    <%if @error == "missing information error"%><br>
+      <h2>Some information is missing, please try again.</h2>
+    <%elsif @error == "price format error"%><br>
+      <h2>Price per night must be numbers only, please try again.</h2>
+    <% end %>
    
 <form action="/newspace" method="POST">
-      <input type="hidden" name="host_id" value=<%@host_id%>/>
+ 
       <label> Title: </label>
       <input type="text" name="title"/><br>
       <label> Short description: </label> 

@@ -121,31 +121,51 @@ describe Application do
       expect(response.body).to include('<input type="date" name="available_to"/><br>')
       expect(response.body).to include('<input type="submit" class="submit_button" value="create space"/>')
     end
+
+    it "redirects to /login page if user not logged in" do
+      response = get("/newspace")
+      expect(response.status).to eq 302
+      expect(response).to be_redirect  
+    end
   end
 
   context "POST /newspace" do
-    it "returns 200 OK and adds the new user to the database" do
+    it "returns 200 OK and adds the new space to the database" do
       login = post('/login', params = { email: "test2@example.com", password: "password2" })
       response = post('/newspace', params = { title: "new title", 
         description: "new description", 
         address: "new address", 
-        price_per_night: "$250.00"}
-        #available_from: "2022-07-20",
-        #available_to: "2022-09-20" }
+        price_per_night: 250.00,
+        available_from: "2022-07-20",
+        available_to: "2022-09-20" }
       )
-    
-      #expect(last_response).to be_redirect
-
       space_repo = SpaceRepository.new.all
       expect(space_repo).to include(
         have_attributes(title: "new title", 
         description: "new description",
         address: "new address", 
-        price_per_night: "$250.00")
-        #available_from: "2022-07-20",
-        #available_to: "2022-09-20")
+        price_per_night: "$250.00",
+        available_from: "2022-07-20",
+        available_to: "2022-09-20")
       ) 
-      ### add tests for spaces
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h2>Congratulations John, you have just created a new space!</h2>')
+      expect(response.body).to include('<p>Title: new title</p>')
+      expect(response.body).to include('<p>Description: new description</p>')
+      expect(response.body).to include('<p>Address: new address</p>')
+      expect(response.body).to include('<p>Price per night: $250.00</p>')
+      expect(response.body).to include('<p>Available from: 2022-07-20</p>')
+      expect(response.body).to include('<p>Available to: 2022-09-20</p>')
+      expect(response.body).to include('<a href="/newspace" class="button">Create a new space</a><br><br>')
     end
+
+    it "returns fails to create a new space if information is missing" do
+      login = post('/login', params = { email: "test2@example.com", password: "password2" })
+
+      repo = SpaceRepository.new
+      new_space = double(:space, address: "address", description: "description", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id)
+      expect{repo.create(new_space)}
+    end
+      
   end
 end

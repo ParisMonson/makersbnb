@@ -79,33 +79,43 @@ class Application < Sinatra::Base
   end
 
   get "/newspace" do
-    p session[:user_id]
     if session[:user_id] == nil
-      return "not logged in"
+      redirect"/login"
     end
     return erb(:new_space)
   end
 
   post "/newspace" do
-    p session[:user_id]
-    @host_id = session[:user_id]
-    #  @user = repo_users.find_user(params[:email])
-   # session[:user_id]
-    repo_spaces = SpaceRepository.new
-    new_space = Space.new
-    p new_space.title = params[:title]
-    p new_space.description = params[:description]
-   p  new_space.address = params[:address]
-    p new_space.price_per_night = params[:price_per_night]
-    # new_space.available_from = params[:available_from]
-    # new_space.available_to = params[:available_to]
-    p new_space.host_id = session[:user_id]
-    repo_spaces.create(new_space)
+    if session[:user_id] == nil
+      redirect"/login"
+    end
+    @error = nil
+    input_validation
+    if @error != nil
+      return erb(:new_space)
+    else
+      repo_spaces = SpaceRepository.new
+      new_space = Space.new
+      new_space.title = params[:title]
+      new_space.description = params[:description]
+      new_space.address = params[:address]
+      new_space.price_per_night = params[:price_per_night]
+      new_space.available_from = params[:available_from]
+      new_space.available_to = params[:available_to]
+      new_space.host_id = session[:user_id]
+      repo_spaces.create(new_space)
+      @space = SpaceRepository.new.find_by_host_id(session[:user_id])[-1]
+      @host = UserRepository.new.find_by_id(session[:user_id])
+      return erb(:new_space_success)
+    end 
+  end
 
-   
-    # redirect "/signup/success" 
+  def input_validation
+    if (params[:title].length == 0 || params[:address].length == 0 || params[:price_per_night].length == 0)
+      @error = "missing information error"
+    elsif params[:price_per_night].match?(/[^\d.]/)
+      @error = "price format error"
+    end
+    return @error
   end
 end
-
-
-#---   <input type="hidden" name="host_id" value=<%session[:user_id]%>/>
