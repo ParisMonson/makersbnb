@@ -140,4 +140,12 @@ describe Application do
       expect(response.body).to include("Requests")
     end
   end
+  context "POST /requests/:reservation_id" do
+    xit "returns redirects to /requests after reservation status updated" do
+      res_id = 
+
+      post("/requests/#{res_id}")
+        
+    end
+  end
 end

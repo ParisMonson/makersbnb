@@ -12,6 +12,9 @@
       Requested Dates: <%=reservation.start_date%> to <%=reservation.end_date%>
       Number of Nights: <%=reservation.number_night%>
       Confirmed: <%=reservation.confirmed%>
+      <%if reservation.confirmed == "f"%>
+      <form action='/requests/<%=reservation.reservation_id%>' method='POST'><input type="submit" value='Confirm'></form>
+      <%end%>
     </div><br>
     <%end%>
 

@@ -86,4 +86,10 @@ class Application < Sinatra::Base
 
     erb :individual_space
   end
+
+  post "/requests/:reservation_id" do
+    repo = ReservationRepository.new
+    repo.confirm_reservation(params[:reservation_id])
+    redirect "/requests"
+  end
 end
