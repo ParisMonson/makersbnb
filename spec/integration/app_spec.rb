@@ -106,4 +106,12 @@ describe Application do
       expect(response.body).to include("a href='/signup'>")
     end
   end
+  context "GET /requests" do
+    it "returns 200 OK" do
+      response = get("/requests")
+      expect(response.status).to eq 200
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("Requests")
+    end
+  end
 end
