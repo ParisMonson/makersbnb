@@ -131,4 +131,28 @@ describe Application do
       expect(response.body).to include("a href='/signup'>")
     end
   end
+
+  context "request to book failed" do
+    it "shows a fail page" do
+      response = get("/request/fail")
+      expect(response.status).to eq 200
+      expect(response.body).to include("<p>Please go back and try again - make sure you have entered dates!</p>")
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("<body>")
+      expect(response.body).to include("<h2>Request Failed</h2>")
+      expect(response.body).to include('<a href="/" class="home">Go to homepage</a>')
+      expect(response.body).to include('<a href="/requests/">Go to your requests</a>')
+    end
+  end
+  context "request to book successful" do
+    xit "shows a success page" do
+      response = get("/request/success")
+      expect(response.status).to eq 200
+      expect(response.body).to include("You have successfully sent a request to stay at")
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("<body>")
+      expect(response.body).to include('<a href="/" class="home">Go to homepage</a>')
+      expect(response.body).to include('<a href="/requests/">Go to your requests</a>')
+    end
+  end
 end
