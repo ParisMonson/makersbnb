@@ -33,15 +33,15 @@ describe Application do
   end
 
   context "POST /signup" do
-    it 'create a new user and redirects to /signup/success' do
-      response = post('/signup', params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
-    
+    it "create a new user and redirects to /signup/success" do
+      response = post("/signup", params = { first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com", password: "hash_password" })
+
       expect(last_response).to be_redirect
 
       user_repo = UserRepository.new.all
       expect(user_repo).to include(
         have_attributes(first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com")
-      ) 
+      )
       ### add tests for spaces
     end
   end
@@ -60,9 +60,9 @@ describe Application do
   end
 
   context "POST /login" do
-    it 'redirects to / if email and password have been validated' do
-      response = post('/login', params = { email: "test2@example.com", password: "password2" })
-      expect(response).to be_redirect  
+    it "redirects to / if email and password have been validated" do
+      response = post("/login", params = { email: "test2@example.com", password: "password2" })
+      expect(response).to be_redirect
     end
   end
 
@@ -76,13 +76,14 @@ describe Application do
     end
   end
 
-  context "GET /:host_name/:title" do
+  context "GET /:space_id" do
     it "shows an individual space page" do
-      response = get("/John/beach_view")
+      space_id = SpaceRepository.new.all[0].space_id
+      response = get("#{space_id}")
       expect(response.status).to eq 200
       expect(response.body).to include "<h1>MakersBNB</h1>"
       expect(response.body).to include '<a href="/" class="home">Go back to homepage</a>'
-      expect(response.body).to include "<p>The host of this space is:"
+      expect(response.body).to include "<p>The host of this space is: John"
     end
   end
   context "GET /signup/success" do
