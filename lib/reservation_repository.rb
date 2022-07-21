@@ -40,6 +40,11 @@ class ReservationRepository
     DatabaseConnection.exec_params(sql, [id])
   end
 
+  def confirm_reservation(reservation_id)
+    sql = "UPDATE reservations SET confirmed = 't' WHERE reservation_id=$1;"
+    DatabaseConnection.exec_params(sql, [reservation_id])
+  end
+
   private
 
   def convert(result_set)
