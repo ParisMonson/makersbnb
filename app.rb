@@ -68,14 +68,6 @@ class Application < Sinatra::Base
 
     erb :index
   end
-
-  get "/:space_id" do
-    space_id = params[:space_id]
-    @space = SpaceRepository.new.find_by_space_id(space_id)[0]
-    @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
-
-    erb :individual_space
-  end
   get "/requests" do
     @repo = ReservationRepository.new
     @space_repo = SpaceRepository.new
@@ -83,5 +75,13 @@ class Application < Sinatra::Base
     @id = session[:user_id]
 
     return erb(:requests)
+  end
+
+  get "/:space_id" do
+    space_id = params[:space_id]
+    @space = SpaceRepository.new.find_by_space_id(space_id)[0]
+    @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
+
+    erb :individual_space
   end
 end
