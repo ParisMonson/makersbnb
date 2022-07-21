@@ -79,6 +79,7 @@ class Application < Sinatra::Base
   end
   get "/requests" do
     @repo = ReservationRepository.new
+    @space_repo = SpaceRepository.new
     @id = session[:user_id]
 
     return erb(:requests)
