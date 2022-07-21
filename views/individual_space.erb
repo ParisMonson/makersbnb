@@ -3,14 +3,25 @@
    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
-    <h1>MakersBNB</h1>
+    <h1>MakersBNB</h1><br>
 
    <div>
       <p><%=@space.title%></p>
       <p><%=@space.description%></p>
       <p><%=@space.price_per_night%></p>
       <p>The host of this space is: <%=@host_name%></p>
-   </div>
+   </div><br>
+
+   <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
+   <p>Choose the dates of your stay:</p><br>
+   <form action="/requests">
+      <label>From:</label>
+      <input type="date" name="available_from"/>
+      <label>To:</label>
+      <input type="date" name="available_to"/> 
+      <button>Request to Book!</button>
+    </form>
+    <%end%>
 
     <a href="/" class="home">Go back to homepage</a>
   </body>

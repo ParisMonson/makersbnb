@@ -30,7 +30,7 @@ class Application < Sinatra::Base
     repo_users.create_user(new_user)
     @user = repo_users.find_user(params[:email])
     session[:user_id] = @user.user_id
-    redirect "/signup/success" 
+    redirect "/signup/success"
     # to add a conditional - if the input data is correct
   end
   get "/signup/success" do
@@ -47,7 +47,7 @@ class Application < Sinatra::Base
       @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
       redirect "/"
-       ###
+      ###
       # to add a conditional - if the input data is correct
     end
     redirect "/login/fail"
@@ -55,7 +55,7 @@ class Application < Sinatra::Base
   get "/login/fail" do
     return erb(:login_fail)
   end
-  
+
   get "/logout" do
     session.delete(:user_id)
     redirect "/"
@@ -69,11 +69,10 @@ class Application < Sinatra::Base
     erb :index
   end
 
-  get "/:host_name/:title" do
-    @host_name = params[:host_name].split("_").join(" ")
-    @title = params[:title].split("_").join(" ")
-
-    @space = SpaceRepository.new.find_by_title(@title)[0]
+  get "/:space_id" do
+    space_id = params[:space_id]
+    @space = SpaceRepository.new.find_by_space_id(space_id)[0]
+    @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
 
     erb :individual_space
   end
