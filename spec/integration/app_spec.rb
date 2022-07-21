@@ -158,6 +158,24 @@ context "GET /request/?" do
     end 
   end
 
+  context "GET /requests" do
+    it "returns 200 OK when logged in" do
+      post("/login", params={email: "ajones@example.com", password: "password3"})
+      response = get("/requests")
+      expect(response.status).to eq 200
+      expect(response.body).to include("<html>")
+      expect(response.body).to include("Requests")
+    end
+  end
+  
+  context "POST /requests/:reservation_id" do
+    xit "returns redirects to /requests after reservation status updated" do
+      res_id = 
+
+      post("/requests/#{res_id}")
+        end 
+   end 
+        
   context "GET /newspace" do
     it "returns 200 OK and form for create a new space" do
       login = post('/login', params = { email: "test2@example.com", password: "password2" })
