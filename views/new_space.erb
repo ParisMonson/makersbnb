@@ -1,41 +1,39 @@
 <html>
-  <head> 
-   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
-    <h1>MakersBNB</h1><br>
-    <h2>Create a new space:</h2>
-    <%if @error == "missing information error"%><br>
-      <h2>Some information is missing, please try again.</h2>
-    <%elsif @error == "price format error"%><br>
-      <h2>Price per night must be numbers only, please try again.</h2>
-    <%elsif @error == "invalid title"%><br>
-      <h2>Title must be 50 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
-    <%elsif @error == "invalid description"%><br>
-      <h2>Description must be 500 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
-    <%elsif @error == "invalid address"%><br>
-      <h2>Address must be 100 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
-    <% end %>
-   
-<form action="/newspace" method="POST">
- 
-      <label> Title: </label>
-      <input type="text" name="title"/><br>
-      <label> Short description: </label> 
-      <input type="text" name="description"/><br> 
-      <label> Address: </label> 
-      <input type="text" name="address"/><br> 
-      <label> Price per night: </label> 
-      <input type="int" name="price_per_night"/><br> 
-      <label> Available form: </label> 
-      <input type="date" name="available_from"/><br> 
-      <label> Available to: </label> 
-      <input type="date" name="available_to"/><br> 
-      <input type="submit" class="submit_button" value="create space"/>
-    </form>
-
-    <a href="/" class="home">Go back to homepage</a>
+    <main>
+      <h1>MakersBNB</h1>
+      <br>
+      <h2>Create a new space:</h2>
+      <%if @error == "missing information error"%><br>
+        <h2>Some information is missing, please try again.</h2>
+      <%elsif @error == "price format error"%><br>
+        <h2>Price per night must be numbers only, please try again.</h2>
+      <%elsif @error == "invalid title"%><br>
+        <h2>Title must be 50 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
+      <%elsif @error == "invalid description"%><br>
+        <h2>Description must be 500 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
+      <%elsif @error == "invalid address"%><br>
+        <h2>Address must be 100 characters maximum and contain letters, numbers and standard punctuation only, please try again.</h2>
+      <% end %>
+      <form action="/newspace" method="POST">
+        <label> Title: </label>
+        <input type="text" name="title"/><br>
+        <label> Short description: </label>
+        <input type="text" name="description"/><br>
+        <label> Address: </label>
+        <input type="text" name="address"/><br>
+        <label> Price per night: </label>
+        <input type="int" name="price_per_night"/><br>
+        <label> Available form: </label>
+        <input type="date" name="available_from"/><br>
+        <label> Available to: </label>
+        <input type="date" name="available_to"/><br>
+        <input type="submit" class="submit_button" value="create space"/>
+      </form>
+      <a href="/" class="home">Go back to homepage</a>
+    </main>
   </body>
 </html>
-
-

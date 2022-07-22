@@ -1,28 +1,31 @@
 <html>
-  <head> 
-   <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
   </head>
   <body>
-    <h1>MakersBNB</h1><br>
-
-   <div>
-      <p><%=@space.title%></p>
-      <p><%=@space.description%></p>
-      <p><%=@space.price_per_night%></p>
-      <p>The host of this space is: <%=@host_name%></p>
-   </div><br>
-
-   <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
-   <% session[:space] = @space %>
-   <p>Choose the dates of your stay:</p><br>
-   <form action="/request/?" method="POST">
-      <label>From:</label>
-      <input type="date" min=<%=@space.available_from%> name="available_from"/>
-      <label>To:</label>
-      <input type="date" max=<%=@space.available_to%> name="available_to"/> 
-      <button>Request to Book!</button>
-    </form>
-    <%end%>
-    <a href="/" class="home">Go back to homepage</a>
+    <main>
+      <h1>MakersBNB</h1>
+      <br>
+      <div>
+        <p><%=@space.title%></p>
+        <p><%=@space.description%></p>
+        <p><%=@space.price_per_night%></p>
+        <p>The host of this space is: <%=@host_name%></p>
+      </div>
+      <br>
+      <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
+        <% session[:space] = @space %>
+        <p>Choose the dates of your stay:</p>
+        <br>
+        <form action="/request/?" method="POST">
+          <label>From:</label>
+          <input type="date" min=<%=@space.available_from%> name="available_from"/>
+          <label>To:</label>
+          <input type="date" max=<%=@space.available_to%> name="available_to"/>
+          <button>Request to Book!</button>
+        </form>
+      <%end%>
+      <a href="/" class="home">Go back to homepage</a>
+    </main>
   </body>
 </html>
