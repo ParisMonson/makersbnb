@@ -1,11 +1,11 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
   </head>
   <body>
     <main>
       <div class="logged_in">
-      <a href="/requests" class="request_link">Your Requests</a><br>
+      <a href="/requests" class="top_link">Your Requests</a><br>
         <h1>MakersBNB</h1>
         <% if session[:user_id] %>
           <h2 class="home_header">Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
