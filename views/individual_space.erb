@@ -13,16 +13,16 @@
    </div><br>
 
    <%if !session[:user_id].nil? && session[:user_id] != @space.host_id %>
+   <% session[:space] = @space %>
    <p>Choose the dates of your stay:</p><br>
-   <form action="/requests">
+   <form action="/request/?" method="POST">
       <label>From:</label>
-      <input type="date" name="available_from"/>
+      <input type="date" min=<%=@space.available_from%> name="available_from"/>
       <label>To:</label>
-      <input type="date" name="available_to"/> 
+      <input type="date" max=<%=@space.available_to%> name="available_to"/> 
       <button>Request to Book!</button>
     </form>
     <%end%>
-
     <a href="/" class="home">Go back to homepage</a>
   </body>
 </html>

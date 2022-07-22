@@ -15,6 +15,14 @@ class Application < Sinatra::Base
     enable :sessions
   end
 
+  get "/" do
+    @spaces = SpaceRepository.new.all
+    @user_repo = UserRepository.new
+    @logged_in_user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+
+    erb :index
+  end
+
   get "/signup" do
     return erb(:signup)
   end
@@ -53,7 +61,7 @@ class Application < Sinatra::Base
     end
     redirect "/login/fail"
   end
-  
+
   get "/login/fail" do
     return erb(:login_fail)
   end
@@ -63,12 +71,24 @@ class Application < Sinatra::Base
     redirect "/"
   end
 
-  get "/" do
-    @spaces = SpaceRepository.new.all
-    @user_repo = UserRepository.new
-    @logged_in_user = UserRepository.new.find_by_id(session[:user_id]) if session[:user_id]
+  post "/request/?" do
+    available_from = params[:available_from]
+    available_to = params[:available_to]
+    date_regex = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/
 
-    erb :index
+    if date_regex.match?(available_from) && date_regex.match?(available_to)
+      redirect "/request/success"
+    end
+
+    redirect "/request/fail"
+  end
+
+  get "/request/success" do
+    erb :request_success
+  end
+
+  get "/request/fail" do
+    erb :request_fail
   end
   
   get "/requests" do
