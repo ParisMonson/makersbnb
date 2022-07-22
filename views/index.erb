@@ -7,8 +7,9 @@
     <h1>MakersBNB</h1>
 
     <% if session[:user_id] %>
-
-    <h2>Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
+    <h2>Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2><br>
+    <a href="/requests">Your Requests</a><br>
+    <br>
     <form action="/logout" class="button" style="display: inline-block;">
       <input type="submit" value="Log out" style="position: absolute; top: 30px;padding:2px;"/>
     </form>
