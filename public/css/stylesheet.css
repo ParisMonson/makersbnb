@@ -31,6 +31,10 @@ h1 {
   bottom: 40px;
 }
 
+button {
+  padding: 2px;
+}
+
 .home_header {
   position: relative;
   right: 25%;
@@ -42,10 +46,6 @@ h1 {
 h3.home_header {
   margin-top: 25px;
   margin-bottom: 0;
-}
-
-button {
-  padding: 2px;
 }
 
 .logged_in {
@@ -72,6 +72,10 @@ form.button {
   padding: 0.4rem 30rem;
 }
 
+form.signup {
+  margin-bottom: 20px;
+}
+
 .logged_out {
   position: relative;
   bottom: 70px;
@@ -84,9 +88,14 @@ form.button {
   margin-bottom: 10px;
 }
 
-.button_input {
+.button_input,
+.submit_button {
   font-family: inherit;
   padding: 2px;
+}
+
+.submit_button {
+  margin-top: 10px;
 }
 
 .book_space {
@@ -103,7 +112,7 @@ form.button {
   padding: 0.3rem;
 }
 
-.request_link {
+.top_link {
   position: relative;
   bottom: 70px;
 }
