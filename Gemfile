@@ -17,3 +17,5 @@ gem 'sinatra-contrib', '~> 2.2'
 gem 'rspec', '~> 3.11'
 
 gem 'postgresql', '~> 1.0'
+
+gem "puma", "~> 5.6"
