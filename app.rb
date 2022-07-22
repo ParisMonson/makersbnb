@@ -61,8 +61,6 @@ class Application < Sinatra::Base
       @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
       redirect "/"
-      ###
-      # to add a conditional - if the input data is correct
     end
     redirect "/login/fail"
   end
