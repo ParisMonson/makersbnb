@@ -12,8 +12,8 @@ class Application < Sinatra::Base
   # without having to restart the server.
   configure :development do
     register Sinatra::Reloader
-    enable :sessions
   end
+  enable :sessions
 
   get "/" do
     @spaces = SpaceRepository.new.all
