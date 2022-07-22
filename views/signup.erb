@@ -5,6 +5,13 @@
   <body>
     <h1>MakersBNB</h1>
     <h2>Create Account</h2>
+     <%if @error == "invalid_name"%><br>
+      <h3>Your first name and last name must be 30 characters maximum and contain only letters, spaces, hyphens and apostrophes.</h3>
+     <%elsif @error == "existing_email"%><br>
+      <h3>This email has already been registered.</h3>
+     <%elsif @error == "input_missing"%><br>
+      <h3>Some essential information is missing. Please try again.</h3>
+    <% end %><br><br>
     <form action="/signup" method="POST">
       <label> First Name: </label>
       <input type="text" name="first_name"/><br>
