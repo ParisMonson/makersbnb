@@ -5,28 +5,31 @@
   <body>
     <main>
       <div class="logged_in">
+      <a href="/requests" class="request_link">Your Requests</a><br>
         <h1>MakersBNB</h1>
         <% if session[:user_id] %>
-          <h2>Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
-          <a href="/requests">Your Requests</a><br>
+          <h2 class="home_header">Welcome <%=@logged_in_user.first_name%> <%=@logged_in_user.last_name%>!</h2>
           <form action="/logout" class="button">
             <input type="submit" value="Log out" class="button_input"/>
           </form>
-          <h3>Book a space</h3>
-          <br>
-          <form action="/newspace" class="button">
+          <div class="book_space">
+          <form action="/newspace">
             <input type="submit" value="List a Space" class="list_button"/>
           </form>
+          <h3 class="home_header">Book a space</h3>
+          </div>
         </div>
       <% else %>
         <h2 class="home_header">Welcome!</h2>
         <h3 class="home_header">To book a space just sign up or login!</h3>
+        <div class="logged_out">
         <form action="/signup" class="button">
           <input type="submit" value="Sign up" class="button_input"/>
         </form>
         <form action="/login" class="button">
           <input type="submit" value="Login" class="button_input"/>
         </form>
+        </div>
       <% end %>
       <div class="spaces_list">
         <% @spaces.each do |space| %>
