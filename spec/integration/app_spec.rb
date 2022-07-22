@@ -42,7 +42,6 @@ describe Application do
       expect(user_repo).to include(
         have_attributes(first_name: "Paris", last_name: "Monson", email: "parismonson@yahoo.com")
       )
-      ### add tests for spaces
     end
   end
 
@@ -239,6 +238,13 @@ context "GET /request/?" do
       login = post('/login', params = { email: "test2@example.com", password: "password2" })
       repo = SpaceRepository.new
       new_space = double(:space, price_per_night: 'hello!', address: "address", description: "description", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id)
+      expect{repo.create(new_space)}
+    end
+
+    it "returns fails to create a new space if title, description or address contain not symbols" do
+      login = post('/login', params = { email: "test2@example.com", password: "password2" })
+      repo = SpaceRepository.new
+      new_space = double(:space, price_per_night: '@$!$<>!', address: "address", description: "description", available_from: "2022/07/19", available_to: "2022/08/01", host_id: repo.all.first.host_id)
       expect{repo.create(new_space)}
     end
   end
