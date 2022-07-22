@@ -28,18 +28,23 @@ class Application < Sinatra::Base
   end
 
   post "/signup" do
-    #I think we need to check that the email is uniq at this stage <<<<<<
-    repo_users = UserRepository.new
-    new_user = User.new
-    new_user.first_name = params[:first_name]
-    new_user.last_name = params[:last_name]
-    new_user.email = params[:email]
-    new_user.password = params[:password]
-    repo_users.create_user(new_user)
-    @user = repo_users.find_user(params[:email])
-    session[:user_id] = @user.user_id
-    redirect "/signup/success"
-    # to add a conditional - if the input data is correct
+    @error = nil
+    signup_input_validation
+    if @error != nil
+      @error
+      return erb(:signup)
+    else
+      repo_users = UserRepository.new
+      new_user = User.new
+      new_user.first_name = params[:first_name]
+      new_user.last_name = params[:last_name]
+      new_user.email = params[:email]
+      new_user.password = params[:password]
+      repo_users.create_user(new_user)
+      @user = repo_users.find_user(params[:email])
+      session[:user_id] = @user.user_id
+      redirect "/signup/success"
+    end
   end
   
   get "/signup/success" do
@@ -56,8 +61,6 @@ class Application < Sinatra::Base
       @user = repo_users.find_user(params[:email])
       session[:user_id] = @user.user_id
       redirect "/"
-      ###
-      # to add a conditional - if the input data is correct
     end
     redirect "/login/fail"
   end
@@ -116,7 +119,7 @@ class Application < Sinatra::Base
     @error = nil
     input_validation
     if @error != nil
-      @error
+      p @error
       return erb(:new_space)
     else
       repo_spaces = SpaceRepository.new
@@ -135,32 +138,48 @@ class Application < Sinatra::Base
     end 
   end
 
-  def input_validation
-    if (params[:title].length == 0 || params[:address].length == 0 || params[:price_per_night].length == 0 || params[:available_from].length == 0 || params[:available_to.length == 0])
-      @error = "missing information error"
-    elsif params[:price_per_night].match?(/[^\d.]/)
-      @error = "price format error"
-    elsif params[:title].match?(/[^\w\s?!.,']{10,50}/i)
-      @error = "invalid title"
-    elsif params[:description].match?(/[^\w\s?!.,']{10,500}/i)
-      @error = "invalid description" 
-    elsif params[:address].match?(/[^\w\s.,']{10,100}/i)
-      @error = "invalid address"
-    end
-    return @error
-  end
   
-   get "/:space_id" do
+  get "/:space_id" do
     space_id = params[:space_id]
     @space = SpaceRepository.new.find_by_space_id(space_id)[0]
     @host_name = UserRepository.new.find_by_id(@space.host_id).first_name
-
+    
     erb :individual_space
-   end
-
+  end
+  
   post "/requests/:reservation_id" do
     repo = ReservationRepository.new
     repo.confirm_reservation(params[:reservation_id])
     redirect "/requests"
   end
+
+  private
+
+  def input_validation
+    if (params[:title].length == 0 || params[:address].length == 0 || params[:price_per_night].length == 0 || params[:available_from].length == 0 || params[:available_to.length == 0])
+      @error = "missing information error"
+    elsif params[:price_per_night].match?(/[^\d.]/)
+      @error = "price format error"
+    elsif params[:title].match?(/[^\w\s?!.,']/i)
+      @error = "invalid title"
+    elsif params[:description].match?(/[^\w\s?!.,']/i)
+      @error = "invalid description" 
+    elsif params[:address].match?(/[^\w\s.,']/i)
+      @error = "invalid address"
+    end
+    return @error
+  end
+
+  def signup_input_validation
+    repo_users = UserRepository.new
+    if ((params[:first_name].length == 0) || (params[:last_name].length == 0) || (params[:email].length == 0) || (params[:password].length == 0))
+      @error = "input_missing"
+    elsif (params[:first_name].match?(/[^a-z\s-]{2,30}/i)|| params[:last_name].match?(/[^a-z\s-]{2,30}/i))
+      @error = "invalid_name"
+    elsif !repo_users.find_user(params[:email]).nil?
+      @error = "existing_email"
+    end
+    return @error
+  end
+  
 end
