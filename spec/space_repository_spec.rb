@@ -56,7 +56,7 @@ describe SpaceRepository do
     expect(spaces.last.available_to).to eq "2022-08-01"
   end
 
-  it "deletes a space from the repo" do
+  xit "deletes a space from the repo" do
     repo = SpaceRepository.new
     space = repo.all.last
     repo.delete(space)
@@ -109,6 +109,14 @@ describe SpaceRepository do
     repo = SpaceRepository.new
     space = repo.find_by_title("beach view")[0]
 
+    expect(space.description).to eq "a modern house on the beach"
+    expect(space.price_per_night).to eq "$100.00"
+  end
+
+  it "finds a space by id" do
+    repo = SpaceRepository.new
+    id = repo.find_by_title("beach view")[0].space_id
+    space = repo.find_by_space_id(id)
     expect(space.description).to eq "a modern house on the beach"
     expect(space.price_per_night).to eq "$100.00"
   end
