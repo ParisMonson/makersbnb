@@ -56,7 +56,7 @@ describe SpaceRepository do
     expect(spaces.last.available_to).to eq "2022-08-01"
   end
 
-  xit "deletes a space from the repo" do
+  it "deletes a space from the repo" do
     repo = SpaceRepository.new
     space = repo.all.last
     repo.delete(space)

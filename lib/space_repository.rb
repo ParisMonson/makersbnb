@@ -29,11 +29,11 @@ class SpaceRepository
     # side effect: returns PG object
   end
 
-  # def delete(space)
-  #   sql = "DELETE FROM spaces WHERE space_id = $1;"
-  #   result_set = DatabaseConnection.exec_params(sql, [space.space_id])
-  #   # side effect: returns PG object
-  # end
+  def delete(space)
+    sql = "DELETE FROM spaces WHERE space_id = $1;"
+    result_set = DatabaseConnection.exec_params(sql, [space.space_id])
+    # side effect: returns PG object
+  end
 
   def update_availability(space)
     sql = "UPDATE spaces SET available_from = $1, available_to = $2 WHERE space_id = $3;"
