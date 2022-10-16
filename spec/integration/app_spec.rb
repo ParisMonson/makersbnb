@@ -28,7 +28,7 @@ describe Application do
       expect(response.body).to include('<input type="text" name="last_name"/><br>')
       expect(response.body).to include('<input type="email" name="email"/><br>')
       expect(response.body).to include('<input type="password" name="password"/><br>')
-      expect(response.body).to include('<input type="submit" class="submit_button" value="sign up"/>')
+      expect(response.body).to include('<input type="submit" class="submit_button" value="Sign up"/>')
     end
   end
 
@@ -51,10 +51,10 @@ describe Application do
       expect(response.status).to eq(200)
       expect(response.body).to include("</form>")
       expect(response.body).to include("<html>")
-      expect(response.body).to include("<h2>Log in</h2>")
+      expect(response.body).to include("<h2>Login</h2>")
       expect(response.body).to include('<input type="email" name="email"/><br>')
       expect(response.body).to include('<input type="password" name="password"/><br>')
-      expect(response.body).to include('<input type="submit" class="submit_button" value="log in"/>')
+      expect(response.body).to include('<input type="submit" class="submit_button" value="Login"/>')
     end
   end
 
@@ -70,11 +70,11 @@ describe Application do
       it "shows a list of properties" do
         response = get("/")
         expect(response.status).to eq 200
-        expect(response.body).to include "<h3>To book a space just sign up or login!</h3>"
+        expect(response.body).to include '<h3 class="home_header">To book a space just sign up or login!</h3>'
         expect(response.body).to include "Sign up"
         expect(response.body).to include "Login"
         expect(response.body).to include '<div class="spaces_list">'
-        expect(response.body).to include "<h2>Welcome!</h2>"
+        expect(response.body).to include '<h2 class="home_header">Welcome!</h2>'
         expect(response.body).to include '<input type="submit" value="Login"'
         expect(response.body).to include '<input type="submit" value="Sign up"'
       end
@@ -84,17 +84,17 @@ describe Application do
         post("/login", params = { email: "test2@example.com", password: "password2" })
         response = get("/")
         expect(response.status).to eq 200
-        expect(response.body).to include "<h3>Book a space</h3>"
+        expect(response.body).to include ' <h3 class="home_header">Book a space</h3>'
         expect(response.body).to include '<form action="/logout"'
         expect(response.body).to include "Log out"
         expect(response.body).to include '<div class="spaces_list">'
-        expect(response.body).to include "<h2>Welcome John Parker!</h2>"
+        expect(response.body).to include '<h2 class="home_header">Welcome John Parker!</h2>'
         expect(response.body).to include '<input type="submit" value="Log out"'
         expect(response.body).to include '<form action="/newspace"'
-        expect(response.body).to include "<label>Available from:</label>"
-        expect(response.body).to include '<input type="date" name="available_from"/>'
-        expect(response.body).to include "<label>Available to:</label>"
-        expect(response.body).to include '<input type="date" name="available_to"/>'
+        # expect(response.body).to include "<label>Available from:</label>"
+        # expect(response.body).to include '<input type="date" name="available_from"/>'
+        # expect(response.body).to include "<label>Available to:</label>"
+        # expect(response.body).to include '<input type="date" name="available_to"/>'
       end
     end
   end
@@ -141,7 +141,7 @@ context "GET /request/?" do
       expect(response.body).to include("<body>")
       expect(response.body).to include("<h2>Request Failed</h2>")
       expect(response.body).to include('<a href="/" class="home">Go to homepage</a>')
-      expect(response.body).to include('<a href="/requests/">Go to your requests</a>')
+      expect(response.body).to include('<a href="/requests">Go to your requests</a>')
     end
   end
   context "request to book successful" do
@@ -224,7 +224,7 @@ context "GET /request/?" do
       expect(response.body).to include('<p>Price per night: $250.00</p>')
       expect(response.body).to include('<p>Available from: 2022-07-20</p>')
       expect(response.body).to include('<p>Available to: 2022-09-20</p>')
-      expect(response.body).to include('<a href="/newspace" class="button">Create a new space</a><br><br>')
+      expect(response.body).to include('<a href="/newspace" class="button">Create a new space</a><br>')
     end
 
     it "returns fails to create a new space if information is missing" do
