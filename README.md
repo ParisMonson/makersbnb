@@ -2,7 +2,7 @@ MakersBNB
 =================
 
 <div align="left">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EvSivtsova/chitter-challenge">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/EvSivtsova/makersbnb">
 </div>
 <div>
   <img src="https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white"/>&nbsp
