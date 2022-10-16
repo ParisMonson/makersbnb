@@ -76,6 +76,7 @@ RSpec.describe ReservationRepository do
       expect(reservations[0].number_night).to eq 9
       expect(reservations[0].confirmed).to eq "t"
     end
+
     it "finds a reservation by Guest_id" do
       reservation_repo = ReservationRepository.new
       user_repo = UserRepository.new
@@ -89,12 +90,13 @@ RSpec.describe ReservationRepository do
       expect(reservations[0].confirmed).to eq "t"
     end
   end
-  xit "deletes a reservation by id" do
-    repo = ReservationRepository.new
-    repo.find_by_guest("Anna", "ajones@example.com")
-    repo.delete(1)
-    reservations = repo.all
-    expect(reservations.length).to eq X
-    expect(reservations.first.id).to eq(2)
+
+  it "deletes a reservation by id" do
+    repo  = ReservationRepository.new
+    expect(repo.all.length).to eq 4
+    id = repo.all[-1].reservation_id
+    repo.delete(id)
+    reservation = repo.all
+    expect(reservation.length).to eq 3
   end
 end
