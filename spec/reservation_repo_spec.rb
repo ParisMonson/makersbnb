@@ -128,4 +128,14 @@ RSpec.describe ReservationRepository do
       expect(reservation).to eq nil
     end
   end
+
+  context "when confirming registraton" do
+    it "changes the confirmed value to true" do
+      repo  = ReservationRepository.new
+      id = repo.all[0].reservation_id
+      repo.confirm_reservation(id)
+      reservation = repo.find_by_id(id)
+      expect(reservation.confirmed).to eq "t"
+    end
+  end
 end
