@@ -49,7 +49,7 @@ describe UserRepository do
       expect(repo.all.length).to eq(4)
     end
 
-    xit "fails to delete a user when first_name and last_name and email do not match existing user record" do
+    it "fails to delete a user when first_name, last_name or email do not match existing user record" do
       repo = UserRepository.new
       expect(repo.all.length).to eq(4)
       repo.delete_user("Paris", "Tyson", "mt1245@example.com")
