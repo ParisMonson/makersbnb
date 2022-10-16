@@ -99,4 +99,21 @@ RSpec.describe ReservationRepository do
     reservation = repo.all
     expect(reservation.length).to eq 3
   end
+
+  context "when searching by registraton id" do
+    it "returns the reservaton object" do
+      repo  = ReservationRepository.new
+      id = repo.all[0].reservation_id
+      reservation = repo.find_by_id(id)
+      expect(reservation.start_date).to eq "2022-07-22"
+      expect(reservation.end_date).to eq "2022-07-31"
+      expect(reservation.number_night).to eq 9
+    end
+
+    it "returns nil if the reservation doesn't exist" do
+      repo  = ReservationRepository.new
+      reservation = repo.find_by_id('bbeb236a-46ba-49e9-b706-b59d0933f3b3')
+      expect(reservation).to eq nil
+    end
+  end
 end
