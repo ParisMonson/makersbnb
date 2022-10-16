@@ -77,6 +77,12 @@ RSpec.describe ReservationRepository do
       expect(reservations[0].confirmed).to eq "t"
     end
 
+    it "returns nil if the Host doesn't exist" do
+      reservation_repo = ReservationRepository.new
+      reservation = reservation_repo.find_by_host('bbeb236a-46ba-49e9-b706-b59d0933f3b3')
+      expect(reservation).to eq nil
+    end
+
     it "finds a reservation by Guest_id" do
       reservation_repo = ReservationRepository.new
       user_repo = UserRepository.new
@@ -88,6 +94,12 @@ RSpec.describe ReservationRepository do
       expect(reservations[0].end_date).to eq "2022-08-31"
       expect(reservations[0].number_night).to eq 43
       expect(reservations[0].confirmed).to eq "t"
+    end
+
+    it "returns nil if the guest doesn't exist" do
+      reservation_repo = ReservationRepository.new
+      reservation = reservation_repo.find_by_guest('bbef236a-46ba-49e9-b706-b59d0933f3b3')
+      expect(reservation).to eq nil
     end
   end
 

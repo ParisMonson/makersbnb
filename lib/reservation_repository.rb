@@ -10,12 +10,14 @@ class ReservationRepository
   def find_by_host(host_id)
     sql = "SELECT * FROM reservations WHERE host_id=$1;"
     result_set = DatabaseConnection.exec_params(sql, [host_id])
+    return nil if result_set.to_a.length == 0
     convert(result_set)
   end
 
   def find_by_guest(guest_id)
     sql = "SELECT * FROM reservations WHERE guest_id=$1;"
     result_set = DatabaseConnection.exec_params(sql, [guest_id])
+    return nil if result_set.to_a.length == 0
     convert(result_set)
   end
 
