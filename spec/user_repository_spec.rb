@@ -23,8 +23,6 @@ describe UserRepository do
       expect { repo.create_user(new_user) }.not_to raise_error
       expect(repo.all.length).to eq(5)
       expect(repo.all).to include(have_attributes(:first_name => "Paris", :last_name => "Monson", :email => "paris@mail.com"))
-      # expect(repo.all).to include(have_attributes(:last_name => "Monson"))
-      # expect(repo.all).to include(have_attributes(:email => "paris@mail.com"))
     end
   end
 
@@ -37,20 +35,27 @@ describe UserRepository do
     end
   end
 
-  # context "delete_user(first_name, last_name, email)# method" do
-  #   it "deletes a user when first_name and last_name match existing user record" do
-  #     repo = UserRepository.new
-  #     expect(repo.all.length).to eq(4)
-  #     expect { repo.delete_user("Michael", "Tyson", "mt1245@example.com") }.not_to raise_error
-  #     expect(repo.all.length).to eq(3)
-  #   end
-  #   it "fails to delete a user when first_name and last_name and email do not match existing user record" do
-  #     repo = UserRepository.new
-  #     expect(repo.all.length).to eq(4)
-  #     repo.delete_user("Paris", "Tyson", "mt1245@example.com")
-  #     expect(repo.all.length).to eq(4)
-  #   end
-  # end
+  context "delete_user(first_name, last_name, email)# method" do
+    it "deletes a user when first_name and last_name match existing user record" do
+      repo = UserRepository.new
+      new_user = User.new
+      new_user.first_name = "Paris"
+      new_user.last_name = "Monson"
+      new_user.email = "paris@mail.com"
+      new_user.password = "123"
+      expect { repo.create_user(new_user) }.not_to raise_error
+      expect(repo.all.length).to eq(5)
+      expect { repo.delete_user("Paris", "Monson", "paris@mail.com") }.not_to raise_error
+      expect(repo.all.length).to eq(4)
+    end
+
+    xit "fails to delete a user when first_name and last_name and email do not match existing user record" do
+      repo = UserRepository.new
+      expect(repo.all.length).to eq(4)
+      repo.delete_user("Paris", "Tyson", "mt1245@example.com")
+      expect(repo.all.length).to eq(4)
+    end
+  end
 
   context "find_user(email)#" do
     it "returns user details correctly for correct firstname and email" do

@@ -2,7 +2,7 @@ CREATE EXTENSION IF NOT EXISTS citext;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
---ASSUMPTIONS:
+-- ASSUMPTIONS:
 -- users are hosts and guests
 -- a host can also be a guest
 -- a guest can also be a host
@@ -10,7 +10,6 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- one guest can have many properties
 -- one property can have only one host
 -- one property can have many guests but one guest at any given time
-
 
 DROP TABLE IF EXISTS "public"."users" CASCADE;
 
@@ -37,6 +36,7 @@ CREATE TABLE IF NOT EXISTS spaces (
   PRIMARY KEY (space_id),
   CONSTRAINT fk_host 
     FOREIGN KEY (host_id) REFERENCES users(user_id)
+  ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS "public"."reservations" CASCADE;
@@ -56,6 +56,6 @@ CREATE TABLE IF NOT EXISTS reservations (
   CONSTRAINT fk_guest 
     FOREIGN KEY (guest_id) REFERENCES users(user_id),
   CONSTRAINT fk_space 
-    FOREIGN KEY (space_id) REFERENCES spaces(space_id)
+    FOREIGN KEY (space_id) REFERENCES spaces(space_id) 
+  ON DELETE CASCADE
 );
-
